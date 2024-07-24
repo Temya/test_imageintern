@@ -1,0 +1,54 @@
+<header>
+  <div class="wrapper wrapper_dark">
+    <tui-input>
+      Type a text
+      <input [formControl]="searchInput" tuiTextfield />
+    </tui-input>
+    <div class="buttons">
+      <button
+        tuiIconButton
+        type="button"
+        class="tui-space_right-3 tui-space_bottom-3"
+        icon="tuiIconClock"
+        (click)="setLatest()"
+    ></button>
+    <button
+        tuiIconButton
+        type="button"
+        class="tui-space_right-3 tui-space_bottom-3"
+        icon="tuiIconStar"
+        (click)="setPopular()"
+    ></button>
+      <tui-hosted-dropdown [content]="content">
+        <button tuiButton type="button" [iconRight]="arrow">Category</button>
+      </tui-hosted-dropdown>
+      <ng-template #content>
+        <tui-data-list role="menu">
+          <tui-opt-group>
+            <button (click)="setCategory(item.label)" *ngFor="let item of groups">{{ item.label }}</button>
+          </tui-opt-group>
+        </tui-data-list>
+      </ng-template>
+      <button (click)="search()" tuiButton icon="tuiIconSearch">Search</button>
+    </div>
+  </div>
+</header>
+<div class="main">
+  <div *ngFor="let item of images" class="item">
+    <img [src]="item.largeImageURL" alt="" />
+    <div class="in">
+      <p>Likes: {{ item.likes }}</p>
+      <p>Downloads: {{ item.downloads }}</p>
+      <p>Views: {{ item.views }}</p>
+    </div>
+  </div>
+</div>
+<footer>
+  <tui-pagination
+  [activePadding]="activePadding"
+  [index]="pageIndex"
+  [length]="63"
+  [sidePadding]="sidePadding"
+  (indexChange)="goToPage($event)"
+></tui-pagination>
+</footer>
