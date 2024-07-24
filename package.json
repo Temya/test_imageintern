@@ -21,6 +21,7 @@
     "@angular/platform-server": "^18.1.0",
     "@angular/router": "^18.1.0",
     "@angular/ssr": "^18.1.1",
+    "@ng-web-apis/universal": "^4.2.0",
     "@taiga-ui/cdk": "^3.87.0",
     "@taiga-ui/core": "^3.87.0",
     "@taiga-ui/icons": "^3.87.0",

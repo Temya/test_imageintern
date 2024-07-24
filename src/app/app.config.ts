@@ -8,7 +8,7 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
+import { UNIVERSAL_PROVIDERS } from '@ng-web-apis/universal';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,5 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     importProvidersFrom(TuiRootModule),
     provideHttpClient(withFetch()),
+    UNIVERSAL_PROVIDERS,
   ],
 };

@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  ViewEncapsulation,
+} from '@angular/core';
 import { TuiInputModule, TuiPaginationModule, TUI_ARROW } from '@taiga-ui/kit';
 import { TuiButtonModule, TuiSvgModule } from '@taiga-ui/core';
 import { BackendService } from '../../services/backend.service';
@@ -20,12 +26,12 @@ import { Subject, takeUntil } from 'rxjs';
     TuiDataListModule,
     TuiSvgModule,
     TuiHostedDropdownModule,
-    TuiPaginationModule
+    TuiPaginationModule,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent implements OnDestroy {
   public images: Images[] = [];
@@ -100,13 +106,17 @@ export class MainComponent implements OnDestroy {
     },
   ];
 
-  constructor(private readonly service: BackendService, private readonly cdr: ChangeDetectorRef) {
-    service.getAllDataImages$(this.pageIndex + 1)
-    .pipe(takeUntil(this.unSubscribe$$))
-    .subscribe(data => {
-      (this.images = data.hits), console.log(data);
-      this.cdr.detectChanges();
-    });
+  constructor(
+    private readonly service: BackendService,
+    private readonly cdr: ChangeDetectorRef
+  ) {
+    service
+      .getAllDataImages$(this.pageIndex + 1)
+      .pipe(takeUntil(this.unSubscribe$$))
+      .subscribe(data => {
+        (this.images = data.hits), console.log(data);
+        this.cdr.detectChanges();
+      });
   }
 
   public search() {
@@ -115,56 +125,68 @@ export class MainComponent implements OnDestroy {
       this.service.searchWord = this.searchInput.value;
     }
     this.searchInput.setValue('');
-    this.service.getAllDataImages$(this.pageIndex + 1)
-    .pipe(takeUntil(this.unSubscribe$$))
-    .subscribe(data => {
-      (this.images = data.hits), console.log(this.images), this.cdr.detectChanges();;
-    });
-    
+    this.service
+      .getAllDataImages$(this.pageIndex + 1)
+      .pipe(takeUntil(this.unSubscribe$$))
+      .subscribe(data => {
+        (this.images = data.hits),
+          console.log(this.images),
+          this.cdr.detectChanges();
+      });
   }
 
   public setCategory(value: string) {
     this.pageIndex = 0;
     this.service.categoryWord = value;
-    this.service.getAllDataImages$(this.pageIndex + 1)
-    .pipe(takeUntil(this.unSubscribe$$))
-    .subscribe(data => {
-      (this.images = data.hits), console.log(this.images), this.cdr.detectChanges();;
-    });
+    this.service
+      .getAllDataImages$(this.pageIndex + 1)
+      .pipe(takeUntil(this.unSubscribe$$))
+      .subscribe(data => {
+        (this.images = data.hits),
+          console.log(this.images),
+          this.cdr.detectChanges();
+      });
   }
 
   public setPopular() {
     this.pageIndex = 0;
-    if(this.service.sortWord === "latest") {
-      this.service.sortWord = "popular";
+    if (this.service.sortWord === 'latest') {
+      this.service.sortWord = 'popular';
     }
-    this.service.getAllDataImages$(this.pageIndex + 1)
-    .pipe(takeUntil(this.unSubscribe$$))
-    .subscribe(data => {
-      (this.images = data.hits), console.log(this.images), this.cdr.detectChanges();;
-    });
+    this.service
+      .getAllDataImages$(this.pageIndex + 1)
+      .pipe(takeUntil(this.unSubscribe$$))
+      .subscribe(data => {
+        (this.images = data.hits),
+          console.log(this.images),
+          this.cdr.detectChanges();
+      });
   }
 
   public setLatest() {
     this.pageIndex = 0;
-    if(this.service.sortWord === "popular") {
-      this.service.sortWord = "latest";
+    if (this.service.sortWord === 'popular') {
+      this.service.sortWord = 'latest';
     }
-    this.service.getAllDataImages$(this.pageIndex + 1)
-    .pipe(takeUntil(this.unSubscribe$$))
-    .subscribe(data => {
-      (this.images = data.hits), console.log(this.images), this.cdr.detectChanges();;
-    });
+    this.service
+      .getAllDataImages$(this.pageIndex + 1)
+      .pipe(takeUntil(this.unSubscribe$$))
+      .subscribe(data => {
+        (this.images = data.hits),
+          console.log(this.images),
+          this.cdr.detectChanges();
+      });
   }
 
   public goToPage(index: number): void {
     this.pageIndex = index;
-    this.service.getAllDataImages$(this.pageIndex + 1)
-    .pipe(takeUntil(this.unSubscribe$$))
-    .subscribe(data => {
-      (this.images = data.hits), console.log(this.images);
-      this.cdr.detectChanges();
-    });
+    this.service
+      .getAllDataImages$(this.pageIndex + 1)
+      .pipe(takeUntil(this.unSubscribe$$))
+      .subscribe(data => {
+        (this.images = data.hits), console.log(this.images);
+        this.cdr.detectChanges();
+      });
   }
 
   public ngOnDestroy(): void {
