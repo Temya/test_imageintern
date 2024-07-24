@@ -17,6 +17,5 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     importProvidersFrom(TuiRootModule),
     provideHttpClient(withFetch()),
-    UNIVERSAL_PROVIDERS,
   ],
 };
