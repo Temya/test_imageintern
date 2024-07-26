@@ -3,23 +3,21 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Inject,
   inject,
-} from '@angular/core';
-import { TuiInputModule, TuiPaginationModule, TUI_ARROW } from '@taiga-ui/kit';
-import { TuiButtonModule, TuiLoaderModule, TuiSvgModule } from '@taiga-ui/core';
-import { BackendService } from '../../services/backend.service';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Images } from '../../interfaces/images';
-import { CommonModule } from '@angular/common';
-import { TuiDataListModule } from '@taiga-ui/core';
-import { TuiHostedDropdownModule } from '@taiga-ui/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TUI_IS_E2E } from '@taiga-ui/cdk';
-import { delay, debounceTime } from 'rxjs';
+} from "@angular/core";
+import { TuiInputModule, TuiPaginationModule, TUI_ARROW } from "@taiga-ui/kit";
+import { TuiButtonModule, TuiLoaderModule, TuiSvgModule } from "@taiga-ui/core";
+import { BackendService } from "../../services/backend.service";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { Images } from "../../interfaces/images";
+import { CommonModule } from "@angular/common";
+import { TuiDataListModule } from "@taiga-ui/core";
+import { TuiHostedDropdownModule } from "@taiga-ui/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { delay, debounceTime } from "rxjs";
 
 @Component({
-  selector: 'app-main',
+  selector: "app-main",
   standalone: true,
   imports: [
     TuiInputModule,
@@ -32,19 +30,19 @@ import { delay, debounceTime } from 'rxjs';
     TuiPaginationModule,
     TuiLoaderModule
   ],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.scss',
+  templateUrl: "./main.component.html",
+  styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {
   public images: Images[] = [];
-  public searchInput = new FormControl('');
+  public searchInput = new FormControl("");
   public pageIndex = 0;
   public loadingStatus = false;
   public pageCount = 0;
-  public searchWord = '';
-  public categoryWord = 'all';
-  public sortWord = 'popular';
+  public searchWord = "";
+  public categoryWord = "all";
+  public sortWord = "popular";
 
   private readonly destroy = inject(DestroyRef);
   readonly arrow = TUI_ARROW;
@@ -95,11 +93,11 @@ export class MainComponent {
 
   public setSort(): void {
     this.pageIndex = 0;
-    if (this.sortWord === 'latest') {
-      this.sortWord = 'popular';
+    if (this.sortWord === "latest") {
+      this.sortWord = "popular";
     }
     else{
-      this.sortWord = 'latest';
+      this.sortWord = "latest";
     }
     this.getItems();
   }
