@@ -2,7 +2,7 @@
   <div class="wrapper wrapper_dark">
     <tui-input [formControl]="searchInput">
       Type a word
-      <input tuiTextfield />
+      
     </tui-input>
     <div class="buttons">
       <button
@@ -10,13 +10,13 @@
         type="button"
         icon="tuiIconClock"
         title="Latest"
-        (click)="setLatest()"></button>
+        (click)="setSort()"></button>
       <button
         tuiIconButton
         type="button"
         icon="tuiIconStar"
         title="Popular"
-        (click)="setPopular()"></button>
+        (click)="setSort()"></button>
       <tui-hosted-dropdown [content]="content">
         <button tuiButton type="button" [iconRight]="arrow">Category</button>
       </tui-hosted-dropdown>
@@ -38,15 +38,17 @@
   <div *ngFor="let item of images" class="item">
     <img [src]="item.largeImageURL" alt="" />
     <div class="info">
-      <p>Likes: {{ item.likes }}</p>
-      <p>Downloads: {{ item.downloads }}</p>
-      <p>Views: {{ item.views }}</p>
+      <ul>
+        <li>Likes: {{ item.likes }}</li>
+        <li>Downloads: {{ item.downloads }}</li>
+        <li>Views: {{ item.views }}</li>
+      </ul>
     </div>
   </div>
 </section>
 <footer>
   <tui-pagination
-    *ngIf="!!pageCount"
+    *ngIf="pageCount"
     [activePadding]="1"
     [index]="pageIndex"
     [length]="pageCount"

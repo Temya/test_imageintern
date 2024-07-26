@@ -18,7 +18,7 @@ export interface Images {
   collections: number;
   likes: number;
   comments: number;
-  user_id: number;
+  userId: number;
   user: string;
   userImageURL: string;
 }

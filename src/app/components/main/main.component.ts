@@ -40,12 +40,11 @@ export class MainComponent {
   public images: Images[] = [];
   public searchInput = new FormControl('');
   public pageIndex = 0;
-  public time?: NodeJS.Timeout
   public loadingStatus = false;
   public pageCount = 0;
   public searchWord = '';
-  public categoryWord: string = 'all';
-  public sortWord: string = 'popular';
+  public categoryWord = 'all';
+  public sortWord = 'popular';
 
   private readonly destroy = inject(DestroyRef);
   readonly arrow = TUI_ARROW;
@@ -76,8 +75,7 @@ export class MainComponent {
 
   constructor(
     private readonly service: BackendService,
-    private readonly cdr: ChangeDetectorRef,
-    @Inject(TUI_IS_E2E) private readonly isE2E: boolean
+    private readonly cdr: ChangeDetectorRef
   ) {
     this.getItems();
     this.searchInput.valueChanges
@@ -95,17 +93,12 @@ export class MainComponent {
     this.getItems();
   }
 
-  public setPopular(): void {
+  public setSort(): void {
     this.pageIndex = 0;
     if (this.sortWord === 'latest') {
       this.sortWord = 'popular';
     }
-    this.getItems();
-  }
-
-  public setLatest(): void {
-    this.pageIndex = 0;
-    if (this.sortWord === 'popular') {
+    else{
       this.sortWord = 'latest';
     }
     this.getItems();
