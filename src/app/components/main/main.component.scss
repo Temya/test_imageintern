@@ -1,9 +1,11 @@
 :host {
-  height: 100vw;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
 }
 
-.main {
-  height: 90vh;
+.images {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -14,20 +16,20 @@
 
 img {
   width: 100%;
-  max-height: 400px;
+  max-height: 380px;
   border-radius: 20px;
   border: 2px darkblue solid;
   cursor: pointer;
 }
 
 .item {
-  width: 20%;
+  width: 22%;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .in {
+  .info {
     opacity: 0;
     width: 100%;
     height: 100%;
@@ -57,6 +59,12 @@ img {
   }
   &_dark {
     background-color: #30406a;
+  }
+}
+
+.menu {
+  button {
+    margin-bottom: 3px;
   }
 }
 
