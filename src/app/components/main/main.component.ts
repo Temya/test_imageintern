@@ -3,10 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
+  Inject,
   inject,
 } from '@angular/core';
 import { TuiInputModule, TuiPaginationModule, TUI_ARROW } from '@taiga-ui/kit';
-import { TuiButtonModule, TuiSvgModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiLoaderModule, TuiSvgModule } from '@taiga-ui/core';
 import { BackendService } from '../../services/backend.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Images } from '../../interfaces/images';
@@ -14,6 +15,8 @@ import { CommonModule } from '@angular/common';
 import { TuiDataListModule } from '@taiga-ui/core';
 import { TuiHostedDropdownModule } from '@taiga-ui/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TUI_IS_E2E } from '@taiga-ui/cdk';
+import { delay, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -27,6 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     TuiSvgModule,
     TuiHostedDropdownModule,
     TuiPaginationModule,
+    TuiLoaderModule
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
@@ -36,7 +40,12 @@ export class MainComponent {
   public images: Images[] = [];
   public searchInput = new FormControl('');
   public pageIndex = 0;
-  public timer?: NodeJS.Timeout;
+  public time?: NodeJS.Timeout
+  public loadingStatus = false;
+  public pageCount = 0;
+  public searchWord = '';
+  public categoryWord: string = 'all';
+  public sortWord: string = 'popular';
 
   private readonly destroy = inject(DestroyRef);
   readonly arrow = TUI_ARROW;
@@ -67,87 +76,64 @@ export class MainComponent {
 
   constructor(
     private readonly service: BackendService,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
+    @Inject(TUI_IS_E2E) private readonly isE2E: boolean
   ) {
-    this.service
-      .getAllDataImages$(this.pageIndex + 1)
-      .pipe(takeUntilDestroyed(this.destroy))
-      .subscribe(data => {
-        this.images = data.hits;
-        console.log(data);
-        this.cdr.detectChanges();
-      });
+    this.getItems();
     this.searchInput.valueChanges
-      .pipe(takeUntilDestroyed(this.destroy))
+      .pipe(takeUntilDestroyed(this.destroy), debounceTime(1000))
       .subscribe(data => {
-        if (this.timer) {
-          clearTimeout(this.timer);
-        }
-        this.timer = setTimeout(() => {
-          this.service.searchWord = data as string;
+          this.searchWord = data as string;
           this.pageIndex = 0;
-          this.service
-            .getAllDataImages$(this.pageIndex + 1)
-            .pipe(takeUntilDestroyed(this.destroy))
-            .subscribe(imagesData => {
-              this.images = imagesData.hits;
-              this.cdr.detectChanges();
-            });
-        }, 1000);
+          this.getItems();
       });
   }
 
   public setCategory(value: string): void {
     this.pageIndex = 0;
-    this.service.categoryWord = value;
-    this.service
-      .getAllDataImages$(this.pageIndex + 1)
-      .pipe(takeUntilDestroyed(this.destroy))
-      .subscribe(data => {
-        this.images = data.hits;
-        console.log(this.images);
-        this.cdr.detectChanges();
-      });
+    this.categoryWord = value;
+    this.getItems();
   }
 
   public setPopular(): void {
     this.pageIndex = 0;
-    if (this.service.sortWord === 'latest') {
-      this.service.sortWord = 'popular';
+    if (this.sortWord === 'latest') {
+      this.sortWord = 'popular';
     }
-    this.service
-      .getAllDataImages$(this.pageIndex + 1)
-      .pipe(takeUntilDestroyed(this.destroy))
-      .subscribe(data => {
-        this.images = data.hits;
-        console.log(this.images);
-        this.cdr.detectChanges();
-      });
+    this.getItems();
   }
 
   public setLatest(): void {
     this.pageIndex = 0;
-    if (this.service.sortWord === 'popular') {
-      this.service.sortWord = 'latest';
+    if (this.sortWord === 'popular') {
+      this.sortWord = 'latest';
     }
-    this.service
-      .getAllDataImages$(this.pageIndex + 1)
-      .pipe(takeUntilDestroyed(this.destroy))
-      .subscribe(data => {
-        this.images = data.hits;
-        console.log(this.images);
-        this.cdr.detectChanges();
-      });
+    this.getItems();
   }
 
   public goToPage(index: number): void {
     this.pageIndex = index;
+    this.getItems();
+  }
+
+  public getItems(): void {
+    this.loadingStatus = true;
+    this.cdr.markForCheck();
+    const params = {
+      q: this.searchWord,
+      category: this.categoryWord,
+      order: this.sortWord,
+      page: this.pageIndex + 1,
+      per_page: 8,
+    }
     this.service
-      .getAllDataImages$(this.pageIndex + 1)
-      .pipe(takeUntilDestroyed(this.destroy))
+      .getAllDataImages$(params)
+      .pipe(takeUntilDestroyed(this.destroy), delay(100))
       .subscribe(data => {
+        this.loadingStatus = false;
         this.images = data.hits;
-        console.log(this.images);
+        console.log(data);
+        this.pageCount = Math.ceil(data.totalHits/8);
         this.cdr.detectChanges();
       });
   }
