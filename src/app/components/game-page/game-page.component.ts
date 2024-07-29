@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,64 +17,81 @@ import { GameMatrix } from '../../interfaces/game-matrix';
 @Component({
   selector: 'app-game-page',
   standalone: true,
-  imports: [
-    TuiInputModule,
-    TuiButtonModule,
-    ReactiveFormsModule,
-    CommonModule
-  ],
+  imports: [TuiInputModule, TuiButtonModule, ReactiveFormsModule, CommonModule],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GamePageComponent {
-
   public numberOfTiles?: number;
-  public countInput = new FormControl("");
+  public countInput = new FormControl('');
   public matrixOfGame: GameMatrix[] = [];
-  public sizeTiles: string = "";
-  
+  public matrixObserved: GameMatrix[] = [];
+
+  public sizeTiles: string = '';
+
   public colors: string[] = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "aqua",
-    "blue",
-    "violet"
-  ]
+    'red',
+    'orange',
+    'yellow',
+    'green',
+    'aqua',
+    'blue',
+    'violet',
+  ];
 
   private readonly destroy = inject(DestroyRef);
-  
-  constructor(private readonly cdr: ChangeDetectorRef,
-    private readonly router: Router){
-      this.countInput.valueChanges
+
+  constructor(
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router
+  ) {
+    this.countInput.valueChanges
       .pipe(takeUntilDestroyed(this.destroy), debounceTime(1000))
       .subscribe(data => {
-          this.generateMatrix(Number(data));
-          console.log(this.matrixOfGame);
-          this.sizeTiles = 100 * Number(data) + "px";
-          this.cdr.detectChanges();
+        this.matrixObserved = [];
+        this.generateMatrix(Number(data));
+        console.log(this.matrixOfGame);
+        this.sizeTiles = 100 * Number(data) + 'px';
+        this.cdr.detectChanges();
       });
-    }
+  }
 
   public generateMatrix(n: number): void {
     this.matrixOfGame = [];
-    for(let i = 0; i < n; i++)
-    {
-      for(let j = 0; j < n; j++)
-      {
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
         const data = {
           x: i,
           y: j,
-          color: this.colors[Math.floor(Math.random() * (7 - 0) + 0)]
+          color: this.colors[Math.floor(Math.random() * (7 - 0) + 0)],
+        };
+        if(!this.matrixObserved.length){
+          this.matrixObserved.push(data);
         }
-        this.matrixOfGame?.push(data);
+        this.matrixOfGame.push(data);
       }
     }
   }
 
+  public changeBoxColor(colorBox: string): void {
+    // this.matrixOfGame.map((data) => data.color = colorBox)
+    this.matrixObserved.map((data) => data.color = colorBox);
+    console.log(this.matrixObserved);
+    // for(let i = 0; i < this.matrixObserved.length; i++){
+    //   this.matrixOfGame.map((data) => {
+    //     if(this.matrixObserved[i].x === data.x && this.matrixObserved[i].y === data.y)
+    //       data.color = this.matrixObserved[i].color
+    //   })
+    // }
+    // for(let i = 0; i < this.matrixObserved.length; i++){
+    //   for(let j = 0; j < this.matrixOfGame.length; j++){
+        
+    //   }  
+    // }
+  }
+
   public goToImages(): void {
-    this.router.navigateByUrl("");
+    this.router.navigateByUrl('');
   }
 }

@@ -1,8 +1,6 @@
 <header>
   <div class="wrapper wrapper_dark">
-    <tui-input [formControl]="searchInput">
-      Type a word
-    </tui-input>
+    <tui-input [formControl]="searchInput"> Type a word </tui-input>
     <div class="buttons">
       <button
         tuiIconButton
@@ -16,22 +14,20 @@
         icon="tuiIconStar"
         title="Popular"
         (click)="setSort()"></button>
-        <button
-        tuiButton
-        type="button"
-        title="Game"
-        (click)="goToGame()">Game</button>
+      <button tuiButton type="button" title="Game" (click)="goToGame()">
+        Game
+      </button>
       <tui-hosted-dropdown [content]="content">
         <button tuiButton type="button" [iconRight]="arrow">Category</button>
       </tui-hosted-dropdown>
       <ng-template #content>
         <tui-data-list role="menu" class="menu">
-            <button
-              (click)="setCategory(item)"
-              tuiOption
-              *ngFor="let item of groups">
-              {{ item }}
-            </button>
+          <button
+            (click)="setCategory(item)"
+            tuiOption
+            *ngFor="let item of groups">
+            {{ item }}
+          </button>
         </tui-data-list>
       </ng-template>
     </div>

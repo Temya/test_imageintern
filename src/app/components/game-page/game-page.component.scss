@@ -1,19 +1,29 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  
 }
 header {
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
-.field {
-    display: flex;
-    flex-wrap: wrap;
-    div {
-        width: 100px;
-        height: 100px;
+section {
+    margin-top: 100px;
+    .field {
+        display: flex;
+        height: 100%;
+        flex-wrap: wrap;
+        div {
+          cursor: pointer;
+          width: 100px;
+          height: 100px;
+        }
     }
 }
+
+
