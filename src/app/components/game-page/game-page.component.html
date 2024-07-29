@@ -1,0 +1,21 @@
+<header>
+    <tui-input [formControl]="countInput">
+        Select number of cells
+                <input
+                    inputmode="numeric"
+                    tuiTextfield
+                />
+    </tui-input>
+    <button
+        tuiButton
+        type="button"
+        title="Images"
+        (click)="goToImages()">Images</button>
+</header>
+
+<section>
+    <div [style.width]="sizeTiles" [style.height]="sizeTiles" class="field" >
+        <div *ngFor="let item of matrixOfGame" [style.background]="item.color"></div>
+    </div>
+</section>
+    

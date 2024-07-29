@@ -1,0 +1,19 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.field {
+    display: flex;
+    flex-wrap: wrap;
+    div {
+        width: 100px;
+        height: 100px;
+    }
+}

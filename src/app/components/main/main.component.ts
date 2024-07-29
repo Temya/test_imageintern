@@ -15,6 +15,7 @@ import { TuiDataListModule } from "@taiga-ui/core";
 import { TuiHostedDropdownModule } from "@taiga-ui/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { delay, debounceTime } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-main",
@@ -73,7 +74,8 @@ export class MainComponent {
 
   constructor(
     private readonly service: BackendService,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router
   ) {
     this.getItems();
     this.searchInput.valueChanges
@@ -127,5 +129,9 @@ export class MainComponent {
         this.pageCount = Math.ceil(data.totalHits/8);
         this.cdr.detectChanges();
       });
+  }
+
+  public goToGame(): void {
+    this.router.navigateByUrl("game");
   }
 }
