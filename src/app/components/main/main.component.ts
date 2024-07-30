@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { TuiInputModule, TuiPaginationModule, TUI_ARROW } from '@taiga-ui/kit';
-import { TuiButtonModule, TuiLoaderModule, TuiSvgModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiDialogModule, TuiLoaderModule, TuiSvgModule } from '@taiga-ui/core';
 import { BackendService } from '../../services/backend.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Images } from '../../interfaces/images';

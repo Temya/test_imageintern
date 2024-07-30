@@ -23,7 +23,6 @@ import { GameMatrix } from '../../interfaces/game-matrix';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GamePageComponent {
-  public numberOfTiles?: number;
   public countInput = new FormControl('');
   public matrixOfGame: GameMatrix[] = [];
   public matrixObserved: GameMatrix[] = [];
@@ -98,14 +97,18 @@ export class GamePageComponent {
   }
 
   public changeBoxColor(colorBox: string): void {
+    //Adding a step
     this.steps++;
+    //Color change in matrixObserved
     this.matrixObserved.map((data) => data.color = colorBox);
+    //Changing the color of the matrixOfGame in the same positions as in matrixObserved
     for (let i = 0; i < this.matrixObserved.length; i++) {
       this.matrixOfGame.map((data) => {
         if (this.matrixObserved[i].x === data.x && this.matrixObserved[i].y === data.y)
           data.color = this.matrixObserved[i].color
       })
     }
+    //Adding adjacent monochrome cells to the matrixObserved
     for (let i = 0; i < this.matrixObserved.length; i++) {
       this.matrixOfGame.map((data) => {
         if (data.x === this.matrixObserved[i].x + 1 && data.y === this.matrixObserved[i].y || data.x === this.matrixObserved[i].x - 1 && data.y === this.matrixObserved[i].y || data.x === this.matrixObserved[i].x && data.y === this.matrixObserved[i].y + 1 || data.x === this.matrixObserved[i].x && data.y === this.matrixObserved[i].y - 1) {
@@ -121,6 +124,7 @@ export class GamePageComponent {
         }
       })  
     }
+    //Checking for the end of the game
     if(this.matrixObserved.length === this.matrixOfGame.length){
       this.isGameOn = false;
       this.isGameEnd = true;
