@@ -11,11 +11,22 @@
         type="button"
         title="Images"
         (click)="goToImages()">Images</button>
+        
 </header>
 
-<section>
+
+<section *ngIf="isGameOn">
     <div [style.width]="sizeTiles" [style.height]="sizeTiles" class="field" >
-        <div *ngFor="let item of matrixOfGame" [style.background]="item.color"></div>
+        <div *ngFor="let item of matrixOfGame" (click)="changeBoxColor(item.color)" [style.background]="item.color"></div>
     </div>
 </section>
+<section class="gameEnd" *ngIf="isGameEnd">
+    <h1>С ПОБЕДОЙ!</h1>
+    <p>Твое количество шагов: {{steps}}<p>
+    <p>Чтобы начать новую игру снова введи number of cells<p></p>
+</section>
+
+<footer *ngIf="isGameOn">
+    <p>Количество шагов: {{steps}} Поле: {{countInput.value}}X{{countInput.value}}</p>
+</footer>
     
