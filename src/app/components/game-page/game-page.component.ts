@@ -30,6 +30,11 @@ export class GamePageComponent {
   public steps = 0;
   public isGameOn = false;
   public isGameEnd = false;
+  public startTime?: number;
+  public endTime?: number;
+  public resultTime?: number;
+  public minutes?: number;
+  public seconds?: number;
 
   public colors: string[] = [
     'red',
@@ -56,6 +61,7 @@ export class GamePageComponent {
         else{ 
           this.isGameEnd = false;
           this.isGameOn = true};
+        this.startTime = new Date().getTime();
         this.steps = 0;
         this.matrixObserved = [];
         this.generateMatrix(Number(data));
@@ -98,7 +104,7 @@ export class GamePageComponent {
 
   public changeBoxColor(colorBox: string): void {
     //Adding a step
-    if(this.matrixObserved[1].color !== colorBox){
+    if(this.matrixObserved[1]?.color !== colorBox){
       this.steps++;
     
       //Color change in matrixObserved
@@ -130,6 +136,10 @@ export class GamePageComponent {
       if(this.matrixObserved.length === this.matrixOfGame.length){
         this.isGameOn = false;
         this.isGameEnd = true;
+        this.endTime = new Date().getTime();
+        this.resultTime = this.endTime - (this.startTime as number);
+        this.minutes = Math.floor(this.resultTime / 60000);
+        this.seconds = Number(((this.resultTime % 60000) / 1000).toFixed(0));
       }
     }
   }
