@@ -9,6 +9,8 @@ export const routes: Routes = [
   {
     path: 'game',
     loadComponent: () =>
-      import('./components/game-page/game-page.component').then(i => i.GamePageComponent),
-  }
+      import('./components/game-page/game-page.component').then(
+        i => i.GamePageComponent
+      ),
+  },
 ];

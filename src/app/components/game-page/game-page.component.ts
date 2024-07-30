@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,20 +17,14 @@ import { GameMatrix } from '../../interfaces/game-matrix';
 @Component({
   selector: 'app-game-page',
   standalone: true,
-  imports: [
-    TuiInputModule,
-    TuiButtonModule,
-    ReactiveFormsModule,
-    CommonModule
-  ],
+  imports: [TuiInputModule, TuiButtonModule, ReactiveFormsModule, CommonModule],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GamePageComponent {
-
   public numberOfTiles?: number;
-  public countInput = new FormControl("");
+  public countInput = new FormControl('');
   public matrixOfGame: GameMatrix[] = [];
   public matrixObserved: GameMatrix[] = [];
   public sizeTiles = "";
@@ -33,14 +33,14 @@ export class GamePageComponent {
   public isGameEnd = false;
 
   public colors: string[] = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "aqua",
-    "blue",
-    "violet"
-  ]
+    'red',
+    'orange',
+    'yellow',
+    'green',
+    'aqua',
+    'blue',
+    'violet',
+  ];
 
   private readonly destroy = inject(DestroyRef);
 
@@ -128,7 +128,7 @@ export class GamePageComponent {
   }
 
   public goToImages(): void {
-    this.router.navigateByUrl("");
+    this.router.navigateByUrl('');
   }
 
   

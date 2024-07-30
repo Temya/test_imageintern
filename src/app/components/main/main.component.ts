@@ -4,21 +4,21 @@ import {
   Component,
   DestroyRef,
   inject,
-} from "@angular/core";
-import { TuiInputModule, TuiPaginationModule, TUI_ARROW } from "@taiga-ui/kit";
-import { TuiButtonModule, TuiDialogModule, TuiLoaderModule, TuiSvgModule } from "@taiga-ui/core";
-import { BackendService } from "../../services/backend.service";
-import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { Images } from "../../interfaces/images";
-import { CommonModule } from "@angular/common";
-import { TuiDataListModule } from "@taiga-ui/core";
-import { TuiHostedDropdownModule } from "@taiga-ui/core";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { delay, debounceTime } from "rxjs";
-import { Router } from "@angular/router";
+} from '@angular/core';
+import { TuiInputModule, TuiPaginationModule, TUI_ARROW } from '@taiga-ui/kit';
+import { TuiButtonModule, TuiLoaderModule, TuiSvgModule } from '@taiga-ui/core';
+import { BackendService } from '../../services/backend.service';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Images } from '../../interfaces/images';
+import { CommonModule } from '@angular/common';
+import { TuiDataListModule } from '@taiga-ui/core';
+import { TuiHostedDropdownModule } from '@taiga-ui/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { delay, debounceTime } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-main",
+  selector: 'app-main',
   standalone: true,
   imports: [
     TuiDialogModule,
@@ -30,21 +30,21 @@ import { Router } from "@angular/router";
     TuiSvgModule,
     TuiHostedDropdownModule,
     TuiPaginationModule,
-    TuiLoaderModule
+    TuiLoaderModule,
   ],
-  templateUrl: "./main.component.html",
-  styleUrl: "./main.component.scss",
+  templateUrl: './main.component.html',
+  styleUrl: './main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {
   public images: Images[] = [];
-  public searchInput = new FormControl("");
+  public searchInput = new FormControl('');
   public pageIndex = 0;
   public loadingStatus = false;
   public pageCount = 0;
-  public searchWord = "";
-  public categoryWord = "all";
-  public sortWord = "popular";
+  public searchWord = '';
+  public categoryWord = 'all';
+  public sortWord = 'popular';
 
   private readonly destroy = inject(DestroyRef);
   readonly arrow = TUI_ARROW;
@@ -82,9 +82,9 @@ export class MainComponent {
     this.searchInput.valueChanges
       .pipe(takeUntilDestroyed(this.destroy), debounceTime(1000))
       .subscribe(data => {
-          this.searchWord = data as string;
-          this.pageIndex = 0;
-          this.getItems();
+        this.searchWord = data as string;
+        this.pageIndex = 0;
+        this.getItems();
       });
   }
 
@@ -96,11 +96,10 @@ export class MainComponent {
 
   public setSort(): void {
     this.pageIndex = 0;
-    if (this.sortWord === "latest") {
-      this.sortWord = "popular";
-    }
-    else{
-      this.sortWord = "latest";
+    if (this.sortWord === 'latest') {
+      this.sortWord = 'popular';
+    } else {
+      this.sortWord = 'latest';
     }
     this.getItems();
   }
@@ -119,7 +118,7 @@ export class MainComponent {
       order: this.sortWord,
       page: this.pageIndex + 1,
       per_page: 8,
-    }
+    };
     this.service
       .getAllDataImages$(params)
       .pipe(takeUntilDestroyed(this.destroy), delay(100))
@@ -127,12 +126,12 @@ export class MainComponent {
         this.loadingStatus = false;
         this.images = data.hits;
         console.log(data);
-        this.pageCount = Math.ceil(data.totalHits/8);
+        this.pageCount = Math.ceil(data.totalHits / 8);
         this.cdr.detectChanges();
       });
   }
 
   public goToGame(): void {
-    this.router.navigateByUrl("game");
+    this.router.navigateByUrl('game');
   }
 }
