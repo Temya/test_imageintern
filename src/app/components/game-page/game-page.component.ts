@@ -28,13 +28,21 @@ export class GamePageComponent {
   public matrixObserved: GameMatrix[] = [];
   public sizeTiles = "";
   public steps = 0;
+  public minSteps = 100;
+  public maxSteps = 0;
   public isGameOn = false;
   public isGameEnd = false;
   public startTime?: number;
   public endTime?: number;
   public resultTime?: number;
+  public minTime = 1000000;
+  public maxTime = 0;
   public minutes?: number;
   public seconds?: number;
+  public minutesMax?: number;
+  public secondsMax?: number;
+  public minutesMin?: number;
+  public secondsMin?: number;
 
   public colors: string[] = [
     'red',
@@ -140,6 +148,14 @@ export class GamePageComponent {
         this.resultTime = this.endTime - (this.startTime as number);
         this.minutes = Math.floor(this.resultTime / 60000);
         this.seconds = Number(((this.resultTime % 60000) / 1000).toFixed(0));
+        this.minutesMin = Math.floor(this.minTime / 60000);
+        this.secondsMin = Number(((this.minTime % 60000) / 1000).toFixed(0));
+        this.minutesMax = Math.floor(this.maxTime / 60000);
+        this.secondsMax = Number(((this.maxTime % 60000) / 1000).toFixed(0));
+        if(this.steps < this.minSteps){this.minSteps = this.steps};
+        if(this.steps > this.maxSteps){this.maxSteps = this.steps};
+        if(this.resultTime < this.minTime){this.minTime = this.resultTime};
+        if(this.resultTime > this.maxTime){this.maxTime = this.resultTime};
       }
     }
   }

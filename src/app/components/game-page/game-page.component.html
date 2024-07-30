@@ -22,9 +22,13 @@
 </section>
 <section class="gameEnd" *ngIf="isGameEnd">
     <h1>С ПОБЕДОЙ!</h1>
-    <p>Твое количество шагов: {{steps}}<p>
+    <p>Твое количество шагов: {{steps}}</p>
     <p>Затраченное время: {{minutes}} min {{seconds}} sec</p>
-    <p>Чтобы начать новую игру снова введи number of cells<p></p>
+    <p>Минимальное кол-во потраченных ходов: {{minSteps}}</p>
+    <p>Максимальное кол-во потраченных ходов: {{maxSteps}}</p>
+    <p>Минимальное время потраченное на прохождение уровня: {{minutesMin}} min {{secondsMin}} sec</p>
+    <p>Максимальное время потраченное на прохождение уровня: {{minutesMax}} min {{secondsMax}} sec</p>
+    <p>Чтобы начать новую игру снова введи number of cells</p>
 </section>
 
 <footer *ngIf="isGameOn">
