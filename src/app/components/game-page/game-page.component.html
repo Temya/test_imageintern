@@ -1,37 +1,42 @@
 <header>
-    <tui-input [formControl]="countInput">
-        Select number of cells
-                <input
-                    inputmode="numeric"
-                    tuiTextfield
-                />
-    </tui-input>
-    <button
-        tuiButton
-        type="button"
-        title="Images"
-        (click)="goToImages()">Images</button>
-        
+  <tui-input-count [formControl]="countInput" [max]="8" [min]="2">
+    Select number of cells
+    <input placeholder="1.. 2.. 3.." tuiTextfield />
+  </tui-input-count>
+  <button tuiButton type="button" title="Images" (click)="goToImages()">
+    Images
+  </button>
 </header>
 
-
 <section *ngIf="isGameOn">
-    <div [style.width]="sizeTiles" [style.height]="sizeTiles" class="field" >
-        <div *ngFor="let item of matrixOfGame" (click)="changeBoxColor(item.color)" [style.background]="item.color"></div>
-    </div>
+  <div [style.width]="sizeTiles" [style.height]="sizeTiles" class="field">
+    <div
+      *ngFor="let item of matrixOfGame"
+      (click)="changeBoxColor(item.color)"
+      [style.background]="item.color"></div>
+  </div>
 </section>
 <section class="gameEnd" *ngIf="isGameEnd">
-    <h1>С ПОБЕДОЙ!</h1>
-    <p>Твое количество шагов: {{steps}}</p>
-    <p>Затраченное время: {{minutes}} min {{seconds}} sec</p>
-    <p>Минимальное кол-во потраченных ходов: {{minSteps}}</p>
-    <p>Максимальное кол-во потраченных ходов: {{maxSteps}}</p>
-    <p>Минимальное время потраченное на прохождение уровня: {{minutesMin}} min {{secondsMin}} sec</p>
-    <p>Максимальное время потраченное на прохождение уровня: {{minutesMax}} min {{secondsMax}} sec</p>
-    <p>Чтобы начать новую игру снова введи number of cells</p>
+  <h1>С ПОБЕДОЙ!</h1>
+  <p>Твое количество шагов: {{ steps }}</p>
+  <p>Затраченное время: {{ resultTime | date: "hh:mm:ss" }}</p>
+  <p>Минимальное кол-во потраченных ходов: {{ minSteps }}</p>
+  <p>Максимальное кол-во потраченных ходов: {{ maxSteps }}</p>
+  <p>
+    Минимальное время потраченное на прохождение уровня:
+    {{ minTime?.getUTCMinutes() }} min {{ minTime?.getUTCSeconds() }} sec
+  </p>
+  <p>
+    Максимальное время потраченное на прохождение уровня:
+    {{ maxTime?.getUTCMinutes() }} min {{ maxTime?.getUTCSeconds() }} sec
+  </p>
+  <p>Чтобы начать новую игру снова введи number of cells</p>
 </section>
 
 <footer *ngIf="isGameOn">
-    <p>Количество шагов: {{steps}} Поле: {{countInput.value}}X{{countInput.value}}</p>
+  <p>
+    Количество шагов: {{ steps }} Поле: {{ countInput.value }}X{{
+      countInput.value
+    }}
+  </p>
 </footer>
-    
