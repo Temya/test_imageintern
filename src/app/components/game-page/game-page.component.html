@@ -1,7 +1,7 @@
 <header>
   <tui-input-count [formControl]="countInput" [max]="8" [min]="2">
     Select number of cells
-    <input placeholder="1.. 2.. 3.." tuiTextfield />
+    <input tuiTextfield />
   </tui-input-count>
   <button tuiButton type="button" title="Images" (click)="goToNavigatePage()">
     Main Menu
@@ -19,7 +19,7 @@
 <section class="gameEnd" *ngIf="isGameEnd">
   <h1>С ПОБЕДОЙ!</h1>
   <p>Твое количество шагов: {{ steps }}</p>
-  <p>Затраченное время: {{ resultTime | date: "hh:mm:ss" }}</p>
+  <p>Затраченное время: {{ resultTime | date: "mm:ss" }}</p>
   <p>Минимальное кол-во потраченных ходов: {{ minSteps }}</p>
   <p>Максимальное кол-во потраченных ходов: {{ maxSteps }}</p>
   <p>

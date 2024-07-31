@@ -61,14 +61,14 @@ export class GamePageComponent {
   ) {
     this.countInput.valueChanges
       .pipe(takeUntilDestroyed(this.destroy), debounceTime(1000))
-      .subscribe(data => {
-        !data ? (this.isGameOn = false) : (this.isGameEnd = false),
-          (this.isGameOn = true);
+      .subscribe(data => {      
+        !data ? this.isGameOn = false : this.isGameOn = true;
+        this.isGameEnd = false
         this.startTime = new Date();
         this.steps = 0;
         this.matrixObserved = [];
-        this.generateMatrix(Number(data));
-        this.sizeTiles = 100 * Number(data) + "px";
+        this.generateMatrix(data as number);
+        this.sizeTiles = 80 * (data as number) + "px";
         this.cdr.detectChanges();
       });
   }
@@ -88,32 +88,7 @@ export class GamePageComponent {
         this.matrixOfGame.push(data);
       }
     }
-    for (let i = 0; i < this.matrixObserved.length; i++) {
-      this.matrixOfGame.map(data => {
-        if (
-          (data.x === this.matrixObserved[i].x + 1 &&
-            data.y === this.matrixObserved[i].y) ||
-          (data.x === this.matrixObserved[i].x - 1 &&
-            data.y === this.matrixObserved[i].y) ||
-          (data.x === this.matrixObserved[i].x &&
-            data.y === this.matrixObserved[i].y + 1) ||
-          (data.x === this.matrixObserved[i].x &&
-            data.y === this.matrixObserved[i].y - 1)
-        ) {
-          if (data.color === this.matrixObserved[i].color) {
-            let count = 0;
-            this.matrixObserved.map(value => {
-              if (value.x === data.x && value.y === data.y) {
-                count++;
-              }
-            });
-            if (count !== 1) {
-              this.matrixObserved.push({ ...data });
-            }
-          }
-        }
-      });
-    }
+    this.checkBox();
   }
 
   public changeBoxColor(colorBox: string): void {
@@ -122,10 +97,10 @@ export class GamePageComponent {
       this.steps++;
 
       //Color change in matrixObserved
-      this.matrixObserved.map(data => (data.color = colorBox));
+      this.matrixObserved.forEach(data => (data.color = colorBox));
       //Changing the color of the matrixOfGame in the same positions as in matrixObserved
       for (let i = 0; i < this.matrixObserved.length; i++) {
-        this.matrixOfGame.map(data => {
+        this.matrixOfGame.forEach(data => {
           if (
             this.matrixObserved[i].x === data.x &&
             this.matrixObserved[i].y === data.y
@@ -134,32 +109,7 @@ export class GamePageComponent {
         });
       }
       //Adding adjacent monochrome cells to the matrixObserved
-      for (let i = 0; i < this.matrixObserved.length; i++) {
-        this.matrixOfGame.map(data => {
-          if (
-            (data.x === this.matrixObserved[i].x + 1 &&
-              data.y === this.matrixObserved[i].y) ||
-            (data.x === this.matrixObserved[i].x - 1 &&
-              data.y === this.matrixObserved[i].y) ||
-            (data.x === this.matrixObserved[i].x &&
-              data.y === this.matrixObserved[i].y + 1) ||
-            (data.x === this.matrixObserved[i].x &&
-              data.y === this.matrixObserved[i].y - 1)
-          ) {
-            if (data.color === this.matrixObserved[i].color) {
-              let count = 0;
-              this.matrixObserved.map(value => {
-                if (value.x === data.x && value.y === data.y) {
-                  count++;
-                }
-              });
-              if (count !== 1) {
-                this.matrixObserved.push({ ...data });
-              }
-            }
-          }
-        });
-      }
+      this.checkBox();
       //Checking for the end of the game
       if (this.matrixObserved.length === this.matrixOfGame.length) {
         this.isGameOn = false;
@@ -180,6 +130,35 @@ export class GamePageComponent {
           this.maxTime = this.resultTime;
         }
       }
+    }
+  }
+
+  public checkBox(): void {
+    for (let i = 0; i < this.matrixObserved.length; i++) {
+      this.matrixOfGame.forEach(data => {
+        if (
+          (data.x === this.matrixObserved[i].x + 1 &&
+            data.y === this.matrixObserved[i].y) ||
+          (data.x === this.matrixObserved[i].x - 1 &&
+            data.y === this.matrixObserved[i].y) ||
+          (data.x === this.matrixObserved[i].x &&
+            data.y === this.matrixObserved[i].y + 1) ||
+          (data.x === this.matrixObserved[i].x &&
+            data.y === this.matrixObserved[i].y - 1)
+        ) {
+          if (data.color === this.matrixObserved[i].color) {
+            let count = 0;
+            this.matrixObserved.forEach(value => {
+              if (value.x === data.x && value.y === data.y) {
+                count++;
+              }
+            });
+            if (count !== 1) {
+              this.matrixObserved.push({ ...data });
+            }
+          }
+        }
+      });
     }
   }
 
