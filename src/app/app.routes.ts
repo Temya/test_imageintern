@@ -5,7 +5,8 @@ import { NavigateComponent } from "./components/navigate/navigate.component";
 
 export const routes: Routes = [
   {
-    path: "", component: NavigateComponent
+    path: "",
+    component: NavigateComponent,
   },
   {
     path: "pictures",
@@ -13,6 +14,6 @@ export const routes: Routes = [
   },
   {
     path: "game",
-    component: GamePageComponent
+    component: GamePageComponent,
   },
 ];

@@ -1,15 +1,14 @@
 :host {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main {
-    display: flex;
-    padding: 10px;
-    gap: 5px;
-    border: 1px solid black;
-    border-radius: 20px;
-
+  display: flex;
+  padding: 10px;
+  gap: 5px;
+  border: 1px solid black;
+  border-radius: 20px;
 }

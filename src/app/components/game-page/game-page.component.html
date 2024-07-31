@@ -16,7 +16,7 @@
       [style.background]="item.color"></div>
   </div>
 </section>
-<section class="gameEnd" *ngIf="isGameEnd">
+<section class="gameEnd" *ngIf="!isGameOn && matrixOfGame.length > 1">
   <h1>С ПОБЕДОЙ!</h1>
   <p>Твое количество шагов: {{ steps }}</p>
   <p>Затраченное время: {{ resultTime | date: "mm:ss" }}</p>

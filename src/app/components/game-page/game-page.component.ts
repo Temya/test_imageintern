@@ -5,6 +5,7 @@ import {
   Component,
   DestroyRef,
   inject,
+  OnInit,
 } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
@@ -28,8 +29,8 @@ import { GameMatrix } from "../../interfaces/game-matrix";
   styleUrl: "./game-page.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GamePageComponent {
-  public countInput = new FormControl(0);
+export class GamePageComponent implements OnInit{
+  public countInput = new FormControl(2);
   public matrixOfGame: GameMatrix[] = [];
   public matrixObserved: GameMatrix[] = [];
   public sizeTiles = "";
@@ -59,16 +60,14 @@ export class GamePageComponent {
     private readonly cdr: ChangeDetectorRef,
     private readonly router: Router
   ) {
+    
+  }
+  ngOnInit(): void {
+    this.gameInit(this.countInput.value as number);
     this.countInput.valueChanges
       .pipe(takeUntilDestroyed(this.destroy), debounceTime(1000))
       .subscribe(data => {      
-        !data ? this.isGameOn = false : this.isGameOn = true;
-        this.isGameEnd = false
-        this.startTime = new Date();
-        this.steps = 0;
-        this.matrixObserved = [];
-        this.generateMatrix(data as number);
-        this.sizeTiles = 80 * (data as number) + "px";
+        this.gameInit(data as number);
         this.cdr.detectChanges();
       });
   }
@@ -80,7 +79,7 @@ export class GamePageComponent {
         const data = {
           x: i,
           y: j,
-          color: this.colors[Math.floor(Math.random() * (7 - 0) + 0)],
+          color: this.colors[Math.floor(Math.random() * 7)],
         };
         if (!this.matrixObserved.length) {
           this.matrixObserved.push({ ...data });
@@ -136,16 +135,7 @@ export class GamePageComponent {
   public checkBox(): void {
     for (let i = 0; i < this.matrixObserved.length; i++) {
       this.matrixOfGame.forEach(data => {
-        if (
-          (data.x === this.matrixObserved[i].x + 1 &&
-            data.y === this.matrixObserved[i].y) ||
-          (data.x === this.matrixObserved[i].x - 1 &&
-            data.y === this.matrixObserved[i].y) ||
-          (data.x === this.matrixObserved[i].x &&
-            data.y === this.matrixObserved[i].y + 1) ||
-          (data.x === this.matrixObserved[i].x &&
-            data.y === this.matrixObserved[i].y - 1)
-        ) {
+        if (this.checkBoxPosition(data, this.matrixObserved[i])) {
           if (data.color === this.matrixObserved[i].color) {
             let count = 0;
             this.matrixObserved.forEach(value => {
@@ -159,6 +149,31 @@ export class GamePageComponent {
           }
         }
       });
+    }
+  }
+
+  public gameInit(data: number): void {
+    !data || data === 1 ? this.isGameOn = false : this.isGameOn = true;
+    this.isGameEnd = false
+    this.startTime = new Date();
+    this.steps = 0;
+    this.matrixObserved = [];
+    this.generateMatrix(data);
+    this.sizeTiles = 80 * data + "px";
+  }
+
+  public checkBoxPosition(matrixOfGame: GameMatrix, matrixObserved: GameMatrix): boolean{
+    if((matrixOfGame.x === matrixObserved.x + 1 &&
+      matrixOfGame.y === matrixObserved.y) ||
+    (matrixOfGame.x === matrixObserved.x - 1 &&
+      matrixOfGame.y === matrixObserved.y) ||
+    (matrixOfGame.x === matrixObserved.x &&
+      matrixOfGame.y === matrixObserved.y + 1) ||
+    (matrixOfGame.x === matrixObserved.x &&
+      matrixOfGame.y === matrixObserved.y - 1)){
+        return true;
+    } else {
+      return false;
     }
   }
 
