@@ -13,7 +13,7 @@
     <div
       *ngFor="let item of matrixOfGame"
       (click)="changeBoxColor(item.color)"
-      [style.background]="item.color"></div>
+      [ngClass]="item.color"></div>
   </div>
 </section>
 <section class="gameEnd" *ngIf="!isGameOn && matrixOfGame.length > 1">
@@ -23,12 +23,10 @@
   <p>Минимальное кол-во потраченных ходов: {{ minSteps }}</p>
   <p>Максимальное кол-во потраченных ходов: {{ maxSteps }}</p>
   <p>
-    Минимальное время потраченное на прохождение уровня:
-    {{ minTime?.getUTCMinutes() }} min {{ minTime?.getUTCSeconds() }} sec
+    Минимальное время потраченное на прохождение уровня: {{ minTime | date: "mm:ss" }}
   </p>
   <p>
-    Максимальное время потраченное на прохождение уровня:
-    {{ maxTime?.getUTCMinutes() }} min {{ maxTime?.getUTCSeconds() }} sec
+    Максимальное время потраченное на прохождение уровня: {{ maxTime | date: "mm:ss" }}
   </p>
   <p>Чтобы начать новую игру снова введи number of cells</p>
 </section>

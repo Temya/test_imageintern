@@ -38,7 +38,6 @@ export class GamePageComponent implements OnInit{
   public minSteps?: number;
   public maxSteps?: number;
   public isGameOn = false;
-  public isGameEnd = false;
   public startTime?: Date;
   public resultTime?: Date;
   public minTime?: Date;
@@ -62,13 +61,23 @@ export class GamePageComponent implements OnInit{
   ) {
     
   }
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.gameInit(this.countInput.value as number);
     this.countInput.valueChanges
       .pipe(takeUntilDestroyed(this.destroy), debounceTime(1000))
-      .subscribe(data => {      
-        this.gameInit(data as number);
-        this.cdr.detectChanges();
+      .subscribe((data) => {  
+        if(!data || data < 2){
+          this.isGameOn = false;
+          this.matrixOfGame = [];
+          this.cdr.detectChanges();
+          return;
+        }
+        else {
+          this.matrixObserved = [];  
+          this.gameInit(data as number);
+          this.cdr.detectChanges();
+        }
+        
       });
   }
 
@@ -96,10 +105,10 @@ export class GamePageComponent implements OnInit{
       this.steps++;
 
       //Color change in matrixObserved
-      this.matrixObserved.forEach(data => (data.color = colorBox));
+      this.matrixObserved.forEach((data) => data.color = colorBox);
       //Changing the color of the matrixOfGame in the same positions as in matrixObserved
       for (let i = 0; i < this.matrixObserved.length; i++) {
-        this.matrixOfGame.forEach(data => {
+        this.matrixOfGame.forEach((data) => {
           if (
             this.matrixObserved[i].x === data.x &&
             this.matrixObserved[i].y === data.y
@@ -112,7 +121,6 @@ export class GamePageComponent implements OnInit{
       //Checking for the end of the game
       if (this.matrixObserved.length === this.matrixOfGame.length) {
         this.isGameOn = false;
-        this.isGameEnd = true;
         this.resultTime = new Date(
           new Date().getTime() - (this.startTime as Date).getTime()
         );
@@ -134,11 +142,11 @@ export class GamePageComponent implements OnInit{
 
   public checkBox(): void {
     for (let i = 0; i < this.matrixObserved.length; i++) {
-      this.matrixOfGame.forEach(data => {
+      this.matrixOfGame.forEach((data) => {
         if (this.checkBoxPosition(data, this.matrixObserved[i])) {
           if (data.color === this.matrixObserved[i].color) {
             let count = 0;
-            this.matrixObserved.forEach(value => {
+            this.matrixObserved.forEach((value) => {
               if (value.x === data.x && value.y === data.y) {
                 count++;
               }
@@ -153,28 +161,22 @@ export class GamePageComponent implements OnInit{
   }
 
   public gameInit(data: number): void {
-    !data || data === 1 ? this.isGameOn = false : this.isGameOn = true;
-    this.isGameEnd = false
+    this.isGameOn = true;
     this.startTime = new Date();
     this.steps = 0;
-    this.matrixObserved = [];
     this.generateMatrix(data);
     this.sizeTiles = 80 * data + "px";
   }
 
   public checkBoxPosition(matrixOfGame: GameMatrix, matrixObserved: GameMatrix): boolean{
-    if((matrixOfGame.x === matrixObserved.x + 1 &&
+    return ((matrixOfGame.x === matrixObserved.x + 1 &&
       matrixOfGame.y === matrixObserved.y) ||
     (matrixOfGame.x === matrixObserved.x - 1 &&
       matrixOfGame.y === matrixObserved.y) ||
     (matrixOfGame.x === matrixObserved.x &&
       matrixOfGame.y === matrixObserved.y + 1) ||
     (matrixOfGame.x === matrixObserved.x &&
-      matrixOfGame.y === matrixObserved.y - 1)){
-        return true;
-    } else {
-      return false;
-    }
+      matrixOfGame.y === matrixObserved.y - 1));
   }
 
   public goToNavigatePage(): void {
