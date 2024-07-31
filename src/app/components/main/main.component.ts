@@ -136,7 +136,7 @@ export class MainComponent {
       });
   }
 
-  public goToGame(): void {
-    this.router.navigateByUrl("game");
+  public goToNavigatePage(): void {
+    this.router.navigateByUrl("");
   }
 }

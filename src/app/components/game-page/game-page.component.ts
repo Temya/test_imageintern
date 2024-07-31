@@ -183,7 +183,7 @@ export class GamePageComponent {
     }
   }
 
-  public goToImages(): void {
+  public goToNavigatePage(): void {
     this.router.navigateByUrl("");
   }
 }

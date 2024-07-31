@@ -5,6 +5,7 @@
   align-items: center;
   height: 100%;
 }
+
 header {
   margin-top: 20px;
   width: 100%;
@@ -19,6 +20,7 @@ section {
     display: flex;
     flex-wrap: wrap;
     border: 3px solid black;
+
     div {
       cursor: pointer;
       width: 100px;
