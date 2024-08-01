@@ -1,16 +1,26 @@
 <div class="main">
   <button
+    routerLink="/pictures"
+    routerLinkActive="use"
     appearance="flat"
     icon="tuiIconImageLarge"
-    tuiButton
-    (click)="goToPictures()">
+    tuiButton>
     Picture
   </button>
   <button
+    routerLink="/game"
+    routerLinkActive="use"
     appearance="flat"
-    icon="tuiIconPlayLarge"
-    tuiButton
-    (click)="goToGame()">
-    Game
+    icon="tuiIconPlusSquareLarge"
+    tuiButton>
+    Color Game
+  </button>
+  <button
+    routerLink="/major/auth"
+    routerLinkActive="use"
+    appearance="flat"
+    icon="tuiIconCoffeeLarge"
+    tuiButton>
+    Master Chef
   </button>
 </div>

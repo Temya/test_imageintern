@@ -3,6 +3,9 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ImagesData } from "../interfaces/images-data";
 import { SearchInterface } from "../interfaces/search-interface";
+import { UserData } from "../interfaces/userdata";
+import { UserParams } from "../interfaces/userparams";
+import { RegNewUser } from "../interfaces/reg-new-user";
 
 @Injectable({
   providedIn: "root",
@@ -23,5 +26,15 @@ export class BackendService {
       paramsNew = Object.assign(paramsNew, { q: paramsDb.q });
     }
     return this.http.get<ImagesData>(url, { params: paramsNew });
+  }
+
+  public checkAuth$(username: string, password: string): Observable<UserData> {
+    const url = `https://dummyjson.com/auth/login`;
+    return this.http.post<UserData>(url, { username, password });
+  }
+
+  public regNewUser$(body: RegNewUser): Observable<UserParams> {
+    const url = 'https://dummyjson.com/users/add';
+    return this.http.post<UserParams>(url, body);
   }
 }

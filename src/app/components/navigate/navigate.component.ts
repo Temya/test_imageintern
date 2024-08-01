@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { TuiButtonModule, TuiSvgModule } from "@taiga-ui/core";
 
 @Component({
   selector: "app-navigate",
   standalone: true,
-  imports: [TuiButtonModule, TuiSvgModule],
+  imports: [TuiButtonModule, TuiSvgModule, RouterModule],
   templateUrl: "./navigate.component.html",
   styleUrl: "./navigate.component.scss",
 })

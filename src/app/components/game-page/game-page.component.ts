@@ -29,7 +29,7 @@ import { GameMatrix } from "../../interfaces/game-matrix";
   styleUrl: "./game-page.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GamePageComponent implements OnInit{
+export class GamePageComponent implements OnInit {
   public countInput = new FormControl(2);
   public matrixOfGame: GameMatrix[] = [];
   public matrixObserved: GameMatrix[] = [];
@@ -58,26 +58,22 @@ export class GamePageComponent implements OnInit{
   constructor(
     private readonly cdr: ChangeDetectorRef,
     private readonly router: Router
-  ) {
-    
-  }
+  ) {}
   public ngOnInit(): void {
     this.gameInit(this.countInput.value as number);
     this.countInput.valueChanges
       .pipe(takeUntilDestroyed(this.destroy), debounceTime(1000))
-      .subscribe((data) => {  
-        if(!data || data < 2){
+      .subscribe(data => {
+        if (!data || data < 2) {
           this.isGameOn = false;
           this.matrixOfGame = [];
           this.cdr.detectChanges();
           return;
-        }
-        else {
-          this.matrixObserved = [];  
+        } else {
+          this.matrixObserved = [];
           this.gameInit(data as number);
           this.cdr.detectChanges();
         }
-        
       });
   }
 
@@ -105,10 +101,10 @@ export class GamePageComponent implements OnInit{
       this.steps++;
 
       //Color change in matrixObserved
-      this.matrixObserved.forEach((data) => data.color = colorBox);
+      this.matrixObserved.forEach(data => (data.color = colorBox));
       //Changing the color of the matrixOfGame in the same positions as in matrixObserved
       for (let i = 0; i < this.matrixObserved.length; i++) {
-        this.matrixOfGame.forEach((data) => {
+        this.matrixOfGame.forEach(data => {
           if (
             this.matrixObserved[i].x === data.x &&
             this.matrixObserved[i].y === data.y
@@ -142,17 +138,20 @@ export class GamePageComponent implements OnInit{
 
   public checkBox(): void {
     for (let i = 0; i < this.matrixObserved.length; i++) {
-      this.matrixOfGame.forEach((data) => {
-        if (this.checkBoxPosition(data, this.matrixObserved[i]) && data.color === this.matrixObserved[i].color) {
+      this.matrixOfGame.forEach(data => {
+        if (
+          this.checkBoxPosition(data, this.matrixObserved[i]) &&
+          data.color === this.matrixObserved[i].color
+        ) {
           let count = 0;
-          this.matrixObserved.forEach((value) => {
+          this.matrixObserved.forEach(value => {
             if (value.x === data.x && value.y === data.y) {
               count++;
             }
           });
           if (count !== 1) {
             this.matrixObserved.push({ ...data });
-          }  
+          }
         }
       });
     }
@@ -166,15 +165,20 @@ export class GamePageComponent implements OnInit{
     this.sizeTiles = 80 * data + "px";
   }
 
-  public checkBoxPosition(matrixOfGame: GameMatrix, matrixObserved: GameMatrix): boolean{
-    return ((matrixOfGame.x === matrixObserved.x + 1 &&
-      matrixOfGame.y === matrixObserved.y) ||
-    (matrixOfGame.x === matrixObserved.x - 1 &&
-      matrixOfGame.y === matrixObserved.y) ||
-    (matrixOfGame.x === matrixObserved.x &&
-      matrixOfGame.y === matrixObserved.y + 1) ||
-    (matrixOfGame.x === matrixObserved.x &&
-      matrixOfGame.y === matrixObserved.y - 1));
+  public checkBoxPosition(
+    matrixOfGame: GameMatrix,
+    matrixObserved: GameMatrix
+  ): boolean {
+    return (
+      (matrixOfGame.x === matrixObserved.x + 1 &&
+        matrixOfGame.y === matrixObserved.y) ||
+      (matrixOfGame.x === matrixObserved.x - 1 &&
+        matrixOfGame.y === matrixObserved.y) ||
+      (matrixOfGame.x === matrixObserved.x &&
+        matrixOfGame.y === matrixObserved.y + 1) ||
+      (matrixOfGame.x === matrixObserved.x &&
+        matrixOfGame.y === matrixObserved.y - 1)
+    );
   }
 
   public goToNavigatePage(): void {
