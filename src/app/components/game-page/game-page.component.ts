@@ -143,18 +143,16 @@ export class GamePageComponent implements OnInit{
   public checkBox(): void {
     for (let i = 0; i < this.matrixObserved.length; i++) {
       this.matrixOfGame.forEach((data) => {
-        if (this.checkBoxPosition(data, this.matrixObserved[i])) {
-          if (data.color === this.matrixObserved[i].color) {
-            let count = 0;
-            this.matrixObserved.forEach((value) => {
-              if (value.x === data.x && value.y === data.y) {
-                count++;
-              }
-            });
-            if (count !== 1) {
-              this.matrixObserved.push({ ...data });
+        if (this.checkBoxPosition(data, this.matrixObserved[i]) && data.color === this.matrixObserved[i].color) {
+          let count = 0;
+          this.matrixObserved.forEach((value) => {
+            if (value.x === data.x && value.y === data.y) {
+              count++;
             }
-          }
+          });
+          if (count !== 1) {
+            this.matrixObserved.push({ ...data });
+          }  
         }
       });
     }
