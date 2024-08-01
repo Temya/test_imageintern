@@ -34,7 +34,7 @@ export class BackendService {
   }
 
   public regNewUser$(body: RegNewUser): Observable<UserParams> {
-    const url = 'https://dummyjson.com/users/add';
+    const url = "https://dummyjson.com/users/add";
     return this.http.post<UserParams>(url, body);
   }
 }

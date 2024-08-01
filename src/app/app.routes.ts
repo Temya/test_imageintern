@@ -16,7 +16,6 @@ export const routes: Routes = [
   {
     path: "major",
     component: MajorComponent,
-    loadChildren: () => 
-      import('./cook-quiz/routes').then((m) =>  childRoutes)
+    loadChildren: () => import("./cook-quiz/routes").then(m => childRoutes),
   },
 ];

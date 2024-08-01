@@ -1,6 +1,6 @@
 export interface UserData {
-    id: number;
-    username: string;
-    password: string;
-    token: string;
+  id: number;
+  username: string;
+  password: string;
+  token: string;
 }
