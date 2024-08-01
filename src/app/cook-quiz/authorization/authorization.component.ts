@@ -31,8 +31,8 @@ export class AuthorizationComponent {
     private readonly service: BackendService,
     private readonly router: Router){
     this.formLogin = this.fb.group({
-      login: this.fb.control("", Validators.required),
-      password: this.fb.control("", Validators.required)
+      login: this.fb.control("", [Validators.required, Validators.minLength(4), Validators.maxLength(64), Validators.pattern("[a-zA-Z]*")]),
+      password: this.fb.control("", [Validators.required, Validators.minLength(8), Validators.maxLength(64), Validators.pattern("^(?=.*?[a-z]).*$")])
     });
   }
 
@@ -53,6 +53,6 @@ export class AuthorizationComponent {
   }
 
   public goRegistration(): void{
-    this.router.navigateByUrl('/major/registr');
+    this.router.navigateByUrl('/major/register');
   }
 }

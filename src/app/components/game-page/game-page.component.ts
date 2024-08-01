@@ -180,8 +180,4 @@ export class GamePageComponent implements OnInit {
         matrixOfGame.y === matrixObserved.y - 1)
     );
   }
-
-  public goToNavigatePage(): void {
-    this.router.navigateByUrl("");
-  }
 }

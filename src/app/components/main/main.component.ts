@@ -135,8 +135,4 @@ export class MainComponent {
         this.cdr.detectChanges();
       });
   }
-
-  public goToNavigatePage(): void {
-    this.router.navigateByUrl("");
-  }
 }

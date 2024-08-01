@@ -32,9 +32,9 @@ export class RegistrationComponent {
     private readonly router: Router){
       this.formRegistration = this.fb.group({
         login: this.fb.control("", Validators.required),
-        password: this.fb.control("", Validators.required),
-        confirmPassword: this.fb.control("", Validators.required),
-        email: this.fb.control("", Validators.required)
+        password: this.fb.control("", [Validators.required, Validators.minLength(8), Validators.maxLength(64), Validators.pattern("(?=.*?[a-z])(?=.*?[0-9]).*")]),
+        confirmPassword: this.fb.control("", [Validators.required, Validators.minLength(8), Validators.maxLength(64)]),
+        email: this.fb.control("", [Validators.required, Validators.email])
       });
     }
 
@@ -53,7 +53,7 @@ export class RegistrationComponent {
             .regNewUser$(body as RegNewUser)
             .pipe(takeUntilDestroyed(this.destroy))
             .subscribe();
-          this.router.navigateByUrl('/major/auth');
+          this.router.navigateByUrl('/major');
         } else {
           console.log('confirmPassword');
         }
@@ -63,6 +63,6 @@ export class RegistrationComponent {
     }
 
   public goToLogin(): void{
-    this.router.navigateByUrl('/major/auth');
+    this.router.navigateByUrl('/major');
   }
 }
