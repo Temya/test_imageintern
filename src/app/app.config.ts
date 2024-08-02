@@ -8,7 +8,7 @@ import {
 import { provideRouter } from "@angular/router";
 import { provideHttpClient, withFetch, withInterceptors } from "@angular/common/http";
 import { routes } from "./app.routes";
-import { loginInterceptor } from "./interceptors/login.interceptor";
+import { loginInterceptor } from "./core/auth/login.interceptor";
 
 export const appConfig: ApplicationConfig = {
   providers: [

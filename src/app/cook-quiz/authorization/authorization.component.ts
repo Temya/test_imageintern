@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, DestroyRef, inject } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject } from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -11,6 +11,9 @@ import { TuiInputModule, TuiInputPasswordModule } from "@taiga-ui/kit";
 import { BackendService } from "../../services/backend.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { Router } from "@angular/router";
+import { TOKEN_KEY } from "../../core/auth/constants"
+import { AuthService } from "../../services/auth.service";
+import { finalize } from "rxjs";
 
 @Component({
   selector: "app-authorization",
@@ -24,48 +27,44 @@ import { Router } from "@angular/router";
   ],
   templateUrl: "./authorization.component.html",
   styleUrl: "./authorization.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthorizationComponent {
-  public formLogin?: FormGroup;
+  public form?: FormGroup;
 
   private readonly destroy = inject(DestroyRef);
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly service: BackendService,
-    private readonly router: Router
-  ) {
-    this.formLogin = this.fb.group({
-      login: this.fb.control("", [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(64),
-        Validators.pattern("[a-zA-Z]*"),
-      ]),
-      password: this.fb.control("", [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(64)
-      ]),
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef
+  ) {    
+    this.form = this.fb.group({
+      login: this.fb.control("", [Validators.required]),
+      password: this.fb.control("", [Validators.required]),
     });
   }
 
   public auth(): void {
-    if(this.formLogin?.valid){
-      this.service
-      .checkAuth$(
-        this.formLogin?.get("login")?.value as string,
-        this.formLogin?.get("password")?.value as string
+    if(this.form?.valid){
+      this.authService.login$(
+        this.form?.get("login")?.value as string,
+        this.form?.get("password")?.value as string
       )
-      .pipe(takeUntilDestroyed(this.destroy))
-      .subscribe(data => {
-        if (data) {
-          localStorage.setItem('token', data.token);
-          this.router.navigateByUrl("/major/...");
-        } else {
-          console.log("Invalid login or password");
+      .pipe(
+        finalize(() =>
+        this.cdr.detectChanges()
+        )
+      )
+      .subscribe(
+        {
+          next: () => {
+            this.router.navigateByUrl("/major/...");
+          }
         }
-      });
+      )
     }
   }
 

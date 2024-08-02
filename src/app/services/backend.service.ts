@@ -6,26 +6,21 @@ import { SearchInterface } from "../interfaces/search-interface";
 import { UserData } from "../interfaces/userdata";
 import { UserParams } from "../interfaces/userparams";
 import { RegNewUser } from "../interfaces/reg-new-user";
+import { ImagesService } from "./images.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class BackendService {
-  constructor(private readonly http: HttpClient) {}
+
+  public user?: UserData;
+
+  constructor(
+    private readonly http: HttpClient,
+    private readonly imageService: ImagesService) {}
 
   public getAllDataImages$(paramsDb: SearchInterface): Observable<ImagesData> {
-    const url = `https://pixabay.com/api/?&image_type=photo&`;
-    let paramsNew = {
-      key: "45072497-2e163a8c2444004f35e828516",
-      category: paramsDb.category,
-      order: paramsDb.order,
-      page: paramsDb.page,
-      per_page: paramsDb.per_page,
-    };
-    if (paramsDb.q) {
-      paramsNew = Object.assign(paramsNew, { q: paramsDb.q });
-    }
-    return this.http.get<ImagesData>(url, { params: paramsNew });
+    return this.imageService.getImages$(paramsDb);
   }
 
   public checkAuth$(username: string, password: string): Observable<UserData> {
@@ -36,5 +31,12 @@ export class BackendService {
   public regNewUser$(body: RegNewUser): Observable<UserParams> {
     const url = "https://dummyjson.com/users/add";
     return this.http.post<UserParams>(url, body);
+  }
+
+  public isAuth(): boolean {
+    if(this.user){
+      return true;
+    }
+    return false;
   }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, DestroyRef, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -14,6 +14,8 @@ import { RegNewUser } from "../../interfaces/reg-new-user";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { customValidator } from "../../validators/custom.validator";
 import { TuiValidationError } from "@taiga-ui/cdk";
+import { outPutErrors } from "./error-output";
+import { ObjectErrorsValidator } from "../../interfaces/object-errors-validator";
 
 @Component({
   selector: "app-registration",
@@ -28,11 +30,11 @@ import { TuiValidationError } from "@taiga-ui/cdk";
   ],
   templateUrl: "./registration.component.html",
   styleUrl: "./registration.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationComponent {
-  public formRegistration?: FormGroup;
-  public error = new TuiValidationError("Password mismatch");
-
+  public form?: FormGroup;
+  
   private readonly destroy = inject(DestroyRef);
 
   constructor(
@@ -40,9 +42,14 @@ export class RegistrationComponent {
     private readonly fb: FormBuilder,
     private readonly router: Router
   ) {
-    this.formRegistration = this.fb.group(
+    this.form = this.fb.group(
       {
-        login: this.fb.control("", Validators.required),
+        login: this.fb.control("", [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(64),
+          Validators.pattern("[a-zA-Z]*")
+        ]),
         password: this.fb.control("", [
           Validators.required,
           Validators.minLength(8),
@@ -61,15 +68,15 @@ export class RegistrationComponent {
   }
 
   public regNewUser(): void {
-    if (this.formRegistration?.valid) {
+    if (this.form?.valid) {
       if (
-        this.formRegistration.get("password")?.value ==
-        this.formRegistration.get("confirmPassword")?.value
+        this.form.get("password")?.value ==
+        this.form.get("confirmPassword")?.value
       ) {
         const body = {
-          username: this.formRegistration.get("login")?.value,
-          password: this.formRegistration.get("password")?.value,
-          email: this.formRegistration.get("email")?.value,
+          username: this.form.get("login")?.value,
+          password: this.form.get("password")?.value,
+          email: this.form.get("email")?.value,
         };
         this.service
           .regNewUser$(body as RegNewUser)
@@ -84,11 +91,25 @@ export class RegistrationComponent {
     }
   }
 
-  get computedError(): TuiValidationError | null {
-    return this.formRegistration?.invalid ? this.error : null;
+  public get passwordConfirmError(): TuiValidationError | null {
+    return this.form?.errors ? new TuiValidationError(outPutErrors(this.form?.errors as ObjectErrorsValidator)) : null;
+  }
+
+  public get passwordError(): TuiValidationError | null {
+    return this.form?.controls["password"].errors ? new TuiValidationError(outPutErrors(this.form?.controls["password"].errors as ObjectErrorsValidator)) : null;
+  }
+
+  public get loginError(): TuiValidationError | null {
+    return this.form?.controls["login"].errors ? new TuiValidationError(outPutErrors(this.form?.controls["login"].errors as ObjectErrorsValidator)) : null;
+  }
+
+  public get emailError(): TuiValidationError | null {
+    return this.form?.controls["email"].errors ? new TuiValidationError(outPutErrors(this.form?.controls["email"].errors as ObjectErrorsValidator)) : null;
   }
 
   public goToLogin(): void {
-    this.router.navigateByUrl("/major");
+    // this.router.navigateByUrl("/major"); 
+    console.log(this.form?.controls["password"].errors);
+       
   }
 }
