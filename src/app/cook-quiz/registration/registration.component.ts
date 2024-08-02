@@ -99,6 +99,10 @@ export class RegistrationComponent {
     return this.form?.controls["password"].errors ? new TuiValidationError(outPutErrors(this.form?.controls["password"].errors as ObjectErrorsValidator)) : null;
   }
 
+  public get passwordSecondError(): TuiValidationError | null {
+    return this.form?.controls["confirmPassword"].errors ? new TuiValidationError(outPutErrors(this.form?.controls["confirmPassword"].errors as ObjectErrorsValidator)) : null;
+  }
+
   public get loginError(): TuiValidationError | null {
     return this.form?.controls["login"].errors ? new TuiValidationError(outPutErrors(this.form?.controls["login"].errors as ObjectErrorsValidator)) : null;
   }

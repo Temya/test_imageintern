@@ -10,11 +10,12 @@
       Type a password
       <input placeholder="Make it secure!" tuiTextfield />
     </tui-input-password>
+    <tui-error *ngIf="this.form.controls['password'].touched && form.dirty" [error]="passwordError"></tui-error>
     <tui-input-password formControlName="confirmPassword">
       Confirm password
       <input placeholder="Make it secure!" tuiTextfield />
     </tui-input-password>
-    <tui-error *ngIf="this.form.controls['password'].touched && form.dirty" [error]="passwordError"></tui-error>
+    <tui-error *ngIf="this.form.controls['confirmPassword'].touched && form.dirty" [error]="passwordSecondError"></tui-error>
     <tui-error *ngIf="this.form.controls['password'].touched && form.dirty" [error]="passwordConfirmError"></tui-error>
     <tui-input formControlName="email">
       Type an email
