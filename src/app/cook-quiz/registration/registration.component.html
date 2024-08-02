@@ -13,7 +13,7 @@
       Confirm password
       <input placeholder="Make it secure!" tuiTextfield />
     </tui-input-password>
-    <tui-error *ngIf="formRegistration.invalid && formRegistration.dirty" [error]="computedError"></tui-error>
+    <tui-error *ngIf="formRegistration.touched && formRegistration.dirty" [error]="computedError"></tui-error>
     <tui-input formControlName="email">
       Type an email
       <input tuiTextfield type="text" />
