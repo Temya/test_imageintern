@@ -6,6 +6,7 @@ export const childRoutes: Routes = [
   {
     path: "",
     component: AuthorizationComponent,
+    
   },
   {
     path: "register",

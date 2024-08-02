@@ -60,6 +60,7 @@ export class AuthorizationComponent {
       .pipe(takeUntilDestroyed(this.destroy))
       .subscribe(data => {
         if (data) {
+          localStorage.setItem('token', data.token);
           this.router.navigateByUrl("/major/...");
         } else {
           console.log("Invalid login or password");
