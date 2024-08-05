@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { TuiButtonModule } from "@taiga-ui/core";
+import { TuiButtonModule, TuiErrorModule } from "@taiga-ui/core";
 import { TuiInputModule, TuiInputPasswordModule } from "@taiga-ui/kit";
 import { BackendService } from "../../services/backend.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
@@ -14,6 +14,8 @@ import { Router } from "@angular/router";
 import { TOKEN_KEY } from "../../core/auth/constants"
 import { AuthService } from "../../core/auth/auth.service";
 import { finalize } from "rxjs";
+import { TuiValidationError } from "@taiga-ui/cdk";
+import { outPutErrors } from "../registration/error-output";
 
 @Component({
   selector: "app-authorization",
@@ -24,6 +26,7 @@ import { finalize } from "rxjs";
     CommonModule,
     TuiInputModule,
     TuiButtonModule,
+    TuiErrorModule,
   ],
   templateUrl: "./authorization.component.html",
   styleUrl: "./authorization.component.scss",
@@ -61,11 +64,19 @@ export class AuthorizationComponent {
       .subscribe(
         {
           next: () => {
-            this.router.navigateByUrl("/major/...");
+            this.router.navigateByUrl("/major/menu");
           }
         }
       )
     }
+  }
+
+  public get passwordError(): TuiValidationError | null {
+    return this.form?.controls["password"].errors ? new TuiValidationError(outPutErrors(this.form?.controls["password"])) : null;
+  }
+
+  public get loginError(): TuiValidationError | null {
+    return this.form?.controls["login"].errors ? new TuiValidationError(outPutErrors(this.form?.controls["login"])) : null;
   }
 
   public goRegistration(): void {
