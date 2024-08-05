@@ -6,7 +6,7 @@ import { SearchInterface } from "../interfaces/search-interface";
 import { UserData } from "../interfaces/userdata";
 import { UserParams } from "../interfaces/userparams";
 import { RegNewUser } from "../interfaces/reg-new-user";
-import { ImagesService } from "./images.service";
+import { ImagesService } from "../core/images/images.service";
 
 @Injectable({
   providedIn: "root",
@@ -31,12 +31,5 @@ export class BackendService {
   public regNewUser$(body: RegNewUser): Observable<UserParams> {
     const url = "https://dummyjson.com/users/add";
     return this.http.post<UserParams>(url, body);
-  }
-
-  public isAuth(): boolean {
-    if(this.user){
-      return true;
-    }
-    return false;
   }
 }

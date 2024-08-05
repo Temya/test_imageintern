@@ -13,7 +13,7 @@ import { Router } from "@angular/router";
 import { TuiButtonModule } from "@taiga-ui/core";
 import { TuiInputCountModule, TuiInputModule } from "@taiga-ui/kit";
 import { debounceTime } from "rxjs";
-import { GameMatrix } from "../../interfaces/game-matrix";
+import { GameMatrix } from "../interfaces/game-matrix";
 
 @Component({
   selector: "app-game-page",

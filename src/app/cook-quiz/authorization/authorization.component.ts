@@ -12,7 +12,7 @@ import { BackendService } from "../../services/backend.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { Router } from "@angular/router";
 import { TOKEN_KEY } from "../../core/auth/constants"
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from "../../core/auth/auth.service";
 import { finalize } from "rxjs";
 
 @Component({

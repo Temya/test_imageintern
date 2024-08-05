@@ -12,9 +12,9 @@ import {
   TuiLoaderModule,
   TuiSvgModule,
 } from "@taiga-ui/core";
-import { BackendService } from "../../services/backend.service";
+import { BackendService } from "../services/backend.service";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { Images } from "../../interfaces/images";
+import { Images } from "../interfaces/images";
 import { CommonModule } from "@angular/common";
 import { TuiDataListModule } from "@taiga-ui/core";
 import { TuiHostedDropdownModule } from "@taiga-ui/core";

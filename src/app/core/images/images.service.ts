@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { SearchInterface } from '../interfaces/search-interface';
+import { SearchInterface } from '../../interfaces/search-interface';
 import { Observable } from 'rxjs';
-import { ImagesData } from '../interfaces/images-data';
+import { ImagesData } from '../../interfaces/images-data';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

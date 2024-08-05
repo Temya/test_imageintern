@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { LOGIN_URL, TOKEN_KEY } from '../core/auth/constants';
+import { LOGIN_URL, TOKEN_KEY } from './constants';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { UserData } from '../interfaces/userdata';
 import { Router } from '@angular/router';
-import { BackendService } from './backend.service';
+import { BackendService } from '../../services/backend.service';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +47,9 @@ export class AuthService {
   private setToken(token: string): void {
 		localStorage.setItem(TOKEN_KEY, token);
 		this.token$$.next(token);
+	}
+
+	public get isAuth(): boolean {
+		return !!this.getToken();
 	}
 }
