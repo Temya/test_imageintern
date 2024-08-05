@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import { SearchInterface } from '../../interfaces/search-interface';
-import { Observable } from 'rxjs';
-import { ImagesData } from '../../interfaces/images-data';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { SearchInterface } from "../../interfaces/search-interface";
+import { Observable } from "rxjs";
+import { ImagesData } from "../../interfaces/images-data";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ImagesService {
-
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {}
 
   public getImages$(paramsDb: SearchInterface): Observable<ImagesData> {
     const url = `https://pixabay.com/api/?&image_type=photo&`;

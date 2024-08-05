@@ -12,12 +12,12 @@ import { ImagesService } from "../core/images/images.service";
   providedIn: "root",
 })
 export class BackendService {
-
   public user?: UserData;
 
   constructor(
     private readonly http: HttpClient,
-    private readonly imageService: ImagesService) {}
+    private readonly imageService: ImagesService
+  ) {}
 
   public getAllDataImages$(paramsDb: SearchInterface): Observable<ImagesData> {
     return this.imageService.getImages$(paramsDb);

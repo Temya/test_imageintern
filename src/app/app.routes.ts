@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { GamePageComponent } from "./game-page/game-page.component";
-import { MainComponent } from "./main/main.component";
+import { MainComponent } from "./images/main.component";
 import { MajorComponent } from "./cook-quiz/major/major.component";
 import { childRoutes } from "./cook-quiz/quiz.routes";
 
