@@ -1,6 +1,6 @@
 export interface GameSettings {
   complexity: string;
-  musik: string;
+  music: string;
   sound: string;
   volume: number;
 }

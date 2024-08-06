@@ -10,7 +10,7 @@ export class QuizSettingsService {
   constructor() {
     this.settings = {
       complexity: "easy",
-      musik: "on",
+      music: "on",
       sound: "on",
       volume: 0.5,
     };

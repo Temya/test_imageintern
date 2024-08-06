@@ -3,6 +3,7 @@ import { Router, RouterOutlet } from "@angular/router";
 import { TuiButtonModule } from "@taiga-ui/core";
 import { CommonModule } from "@angular/common";
 import { BackendService } from "../../../shared/backend.service";
+import { GameSettings } from "../../shared/interfaces/game-settings";
 
 @Component({
   selector: "app-main-menu",
@@ -12,10 +13,18 @@ import { BackendService } from "../../../shared/backend.service";
   styleUrl: "./main-menu.component.scss",
 })
 export class MainMenuComponent {
+
+  private readonly setting?: GameSettings;
+
   constructor(
     private readonly router: Router,
-    private readonly authService: BackendService
-  ) {}
+    private readonly service: BackendService
+  ) {
+    this.setting = service.quiz.getSettings();
+    let audio = new Audio("src/assets/files/game.mp3");
+    audio.load();
+    audio.play();
+  }
 
   public goToNewGame(): void {
     this.router.navigateByUrl("/major/game");
@@ -30,6 +39,6 @@ export class MainMenuComponent {
   }
 
   public exit(): void {
-    this.authService.auth.handleLogoutWithRedirect();
+    this.service.auth.handleLogoutWithRedirect();
   }
 }
