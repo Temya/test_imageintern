@@ -1,38 +1,75 @@
-<div class="form">
+<div class="form" *ngIf="form" [formGroup]="form">
   <h1>Настройки</h1>
   <h3>Выбор сложности</h3>
   <div class="difficultyMenu">
     <tui-radio-block
-            contentAlign="right"
-            [formControl]="complexity"
-            item="easy"
-            size="l"
-        >
-        Легко
-        </tui-radio-block>
-        <tui-radio-block
-            contentAlign="right"
-            [formControl]="complexity"
-            item="medium"
-            size="l"
-        >
-        Нормально
-        </tui-radio-block>
-        <tui-radio-block
-            contentAlign="right"
-            [formControl]="complexity"
-            item="hard"
-            size="l"
-        >
-        Сложно
-        </tui-radio-block>
+      contentAlign="right"
+      formControlName = "complexity"
+      item="easy"
+      size="l">
+      Легко
+    </tui-radio-block>
+    <tui-radio-block
+      contentAlign="right"
+      formControlName = "complexity"
+      item="medium"
+      size="l">
+      Нормально
+    </tui-radio-block>
+    <tui-radio-block
+      contentAlign="right"
+      formControlName = "complexity"
+      item="hard"
+      size="l">
+      Сложно
+    </tui-radio-block>
   </div>
-  <h3>Звук</h3>
   <div class="sounds">
-    <button appearance="secondary-destructive" tuiButton>Музыка</button>
-    <button appearance="secondary-destructive" tuiButton>Звуки</button>
+    <div class="rowSoundBlock">
+      <div class="soundContainer">
+        <h3>Музыка</h3>
+        <div class="buttons">
+          <tui-radio-block
+            contentAlign="right"
+            formControlName = "music"
+            item="on"
+            size="l">
+            Вкл
+          </tui-radio-block>
+          <tui-radio-block
+            contentAlign="right"
+            formControlName = "music"
+            item="off"
+            size="l">
+            Выкл
+          </tui-radio-block>
+        </div>
+      </div>
+      <div class="soundContainer">
+        <h3>Звук</h3>
+        <div class="buttons">
+          <tui-radio-block
+            contentAlign="right"
+            formControlName = "sound"
+            item="on"
+            size="l">
+            Вкл
+          </tui-radio-block>
+          <tui-radio-block
+            contentAlign="right"
+            formControlName = "sound"
+            item="off"
+            size="l">
+            Выкл
+          </tui-radio-block>
+        </div>
+      </div>
+    </div>
+    <tui-input-slider formControlName = "volume" [max]="100" [min]="0" [quantum]="0.01" [steps]="100">
+      Громкость
+    </tui-input-slider>
   </div>
   <div class="endMenu">
-    <button appearance="secondary-destructive" tuiButton>Сохранить</button>
+    <button appearance="flat" tuiButton>Сохранить</button>
   </div>
 </div>

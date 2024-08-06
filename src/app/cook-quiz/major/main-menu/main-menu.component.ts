@@ -12,7 +12,6 @@ import { BackendService } from "../../../shared/backend.service";
   styleUrl: "./main-menu.component.scss",
 })
 export class MainMenuComponent {
-
   constructor(
     private readonly router: Router,
     private readonly authService: BackendService

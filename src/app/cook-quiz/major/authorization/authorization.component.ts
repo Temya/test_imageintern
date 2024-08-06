@@ -54,30 +54,28 @@ export class AuthorizationComponent {
 
   public auth(): void {
     if (this.form?.valid) {
-      this.service
-      .auth
-      .login$(
-        this.form?.get("login")?.value as string,
-        this.form?.get("password")?.value as string
-      )
-      .pipe(finalize(() => this.cdr.detectChanges()))
-      .subscribe({
-        next: () => {
-          this.router.navigateByUrl("/major/menu");
-        },
-      });
-    }
-    else {
+      this.service.auth
+        .login$(
+          this.form?.get("login")?.value as string,
+          this.form?.get("password")?.value as string
+        )
+        .pipe(finalize(() => this.cdr.detectChanges()))
+        .subscribe({
+          next: () => {
+            this.router.navigateByUrl("/major/menu");
+          },
+        });
+    } else {
       this.form?.markAllAsTouched();
     }
   }
 
   public get passwordError(): TuiValidationError | null {
-    return outPutErrors(this.form?.controls["password"])
+    return outPutErrors(this.form?.controls["password"]);
   }
 
   public get loginError(): TuiValidationError | null {
-    return outPutErrors(this.form?.controls["login"])
+    return outPutErrors(this.form?.controls["login"]);
   }
 
   public goRegistration(): void {

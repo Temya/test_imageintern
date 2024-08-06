@@ -37,7 +37,7 @@ import { RegNewUser } from "../../shared/interfaces/reg-new-user";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent {
-  public form?: FormGroup;
+  public form: FormGroup;
 
   private readonly destroy = inject(DestroyRef);
 
@@ -73,37 +73,35 @@ export class RegistrationComponent {
 
   public regNewUser(): void {
     if (this.form?.valid) {
-        const body: RegNewUser = {
-          username: this.form.get("login")?.value,
-          password: this.form.get("password")?.value,
-          email: this.form.get("email")?.value,
-        };
-        this.service
-          .auth
-          .regNewUser$(body)
-          .pipe(takeUntilDestroyed(this.destroy))
-          .subscribe();
-        this.router.navigateByUrl("/major");
+      const body: RegNewUser = {
+        username: this.form.get("login")?.value,
+        password: this.form.get("password")?.value,
+        email: this.form.get("email")?.value,
+      };
+      this.service.auth
+        .regNewUser$(body)
+        .pipe(takeUntilDestroyed(this.destroy))
+        .subscribe();
+      this.router.navigateByUrl("/major");
     } else {
       this.form?.markAllAsTouched();
     }
   }
 
   public get passwordConfirmError(): TuiValidationError | null {
-    return outPutErrors(this.form)
+    return outPutErrors(this.form);
   }
 
   public get passwordError(): TuiValidationError | null {
-    return outPutErrors(this.form?.controls["password"])
+    return outPutErrors(this.form?.controls["password"]);
   }
 
   public get loginError(): TuiValidationError | null {
-    return outPutErrors(this.form?.controls["login"])
-
+    return outPutErrors(this.form?.controls["login"]);
   }
 
   public get emailError(): TuiValidationError | null {
-    return outPutErrors(this.form?.controls["email"])
+    return outPutErrors(this.form?.controls["email"]);
   }
 
   public goToLogin(): void {

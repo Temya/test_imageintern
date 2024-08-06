@@ -81,7 +81,7 @@ export class MainComponent {
 
   constructor(
     private readonly service: BackendService,
-    private readonly cdr: ChangeDetectorRef,
+    private readonly cdr: ChangeDetectorRef
   ) {
     this.getItems();
     this.searchInput.valueChanges
@@ -124,9 +124,8 @@ export class MainComponent {
       page: this.pageIndex + 1,
       per_page: 8,
     };
-    this.service
-    .images
-    .getImages$(params)
+    this.service.images
+      .getImages$(params)
       .pipe(takeUntilDestroyed(this.destroy), delay(100))
       .subscribe(data => {
         this.loadingStatus = false;

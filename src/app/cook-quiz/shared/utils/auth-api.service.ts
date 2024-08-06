@@ -8,16 +8,15 @@ import { UserParams } from "../interfaces/userparams";
 import { RegNewUser } from "../interfaces/reg-new-user";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthApiService {
-
   public readonly token$: Observable<string | undefined>;
   public readonly token$$: BehaviorSubject<string | undefined>;
 
   constructor(
     private readonly router: Router,
-    private readonly http: HttpClient,
+    private readonly http: HttpClient
   ) {
     const token = localStorage.getItem(TOKEN_KEY) || undefined;
     this.token$$ = new BehaviorSubject<string | undefined>(token);
@@ -26,7 +25,7 @@ export class AuthApiService {
 
   public login$(login: string, password: string): Observable<unknown> {
     return this.checkAuth$(login, password).pipe(
-      tap((res) => {
+      tap(res => {
         this.setToken(res.token);
       })
     );
