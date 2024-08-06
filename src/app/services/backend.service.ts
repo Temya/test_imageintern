@@ -1,12 +1,8 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { ImagesData } from "../interfaces/images-data";
-import { SearchInterface } from "../interfaces/search-interface";
+import { Injectable, inject } from "@angular/core";
 import { UserData } from "../interfaces/userdata";
-import { UserParams } from "../interfaces/userparams";
-import { RegNewUser } from "../interfaces/reg-new-user";
 import { ImagesService } from "../core/images/images.service";
+import { AuthService } from "../core/auth/auth.service";
+
 
 @Injectable({
   providedIn: "root",
@@ -14,22 +10,7 @@ import { ImagesService } from "../core/images/images.service";
 export class BackendService {
   public user?: UserData;
 
-  constructor(
-    private readonly http: HttpClient,
-    private readonly imageService: ImagesService
-  ) {}
+  public readonly images = inject(ImagesService);
+  public readonly auth = inject(AuthService);
 
-  public getAllDataImages$(paramsDb: SearchInterface): Observable<ImagesData> {
-    return this.imageService.getImages$(paramsDb);
-  }
-
-  public checkAuth$(username: string, password: string): Observable<UserData> {
-    const url = `https://dummyjson.com/auth/login`;
-    return this.http.post<UserData>(url, { username, password });
-  }
-
-  public regNewUser$(body: RegNewUser): Observable<UserParams> {
-    const url = "https://dummyjson.com/users/add";
-    return this.http.post<UserParams>(url, body);
-  }
 }

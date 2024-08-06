@@ -12,7 +12,7 @@ export const authorizationGuard: CanActivateFn = (route, state) => {
   } else if (redirectIfAuth) return true;
   if (!authService.isAuth && !redirectIfAuth) {
     router.navigate(["/major"]);
-    return true;
+    return false;
   }
   return authService.isAuth;
 };

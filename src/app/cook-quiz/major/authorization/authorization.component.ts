@@ -18,7 +18,7 @@ import { Router } from "@angular/router";
 import { AuthService } from "../../../core/auth/auth.service";
 import { finalize } from "rxjs";
 import { TuiValidationError } from "@taiga-ui/cdk";
-import { outPutErrors } from "../registration/error-output";
+import { outPutErrors } from "../../shared/utils/error-output";
 
 @Component({
   selector: "app-authorization",
@@ -66,18 +66,17 @@ export class AuthorizationComponent {
           },
         });
     }
+    else {
+      this.form?.markAllAsTouched();
+    }
   }
 
   public get passwordError(): TuiValidationError | null {
-    return this.form?.controls["password"].errors
-      ? new TuiValidationError(outPutErrors(this.form?.controls["password"]))
-      : null;
+    return outPutErrors(this.form?.controls["password"])
   }
 
   public get loginError(): TuiValidationError | null {
-    return this.form?.controls["login"].errors
-      ? new TuiValidationError(outPutErrors(this.form?.controls["login"]))
-      : null;
+    return outPutErrors(this.form?.controls["login"])
   }
 
   public goRegistration(): void {

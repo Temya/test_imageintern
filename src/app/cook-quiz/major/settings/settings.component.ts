@@ -1,8 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { TuiButtonModule } from "@taiga-ui/core";
 import { TuiRadioBlockModule } from "@taiga-ui/kit";
+import { GameSettings } from "../../../interfaces/game-settings";
 
 @Component({
   selector: "app-settings",
@@ -18,14 +19,16 @@ import { TuiRadioBlockModule } from "@taiga-ui/kit";
 })
 export class SettingsComponent {
 
-  public form?: FormGroup;
+  public complexity = new FormControl("easy", [Validators.required]);
+  public body: GameSettings = {
+    complexity: this.complexity.value as string,
+    musik: "on",
+    sound: "on",
+    volume: 0.5
+  }
 
   constructor(private readonly fb: FormBuilder){
-    this.form = this.fb.group({
-      complexity: this.fb.control("", [Validators.required]),
-      musik: this.fb.control("", [Validators.required]),
-      sound: this.fb.control("", Validators.required)
-    });
+
   }
 
 

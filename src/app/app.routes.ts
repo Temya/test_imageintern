@@ -1,21 +1,18 @@
 import { Routes } from "@angular/router";
-import { GamePageComponent } from "./game-page/game-page.component";
-import { MainComponent } from "./images/main.component";
-import { MajorComponent } from "./cook-quiz/major/major.component";
 import { childRoutes } from "./cook-quiz/quiz.routes";
 
 export const routes: Routes = [
   {
     path: "pictures",
-    component: MainComponent,
+    loadComponent: () => import("./images/main.component").then((i) => i.MainComponent),
   },
   {
     path: "game",
-    component: GamePageComponent,
+    loadComponent: () => import("./game-page/game-page.component").then((i) => i.GamePageComponent),
   },
   {
     path: "major",
-    component: MajorComponent,
+    loadComponent: () => import("./cook-quiz/major/major.component").then((i) => i.MajorComponent),
     loadChildren: () =>
       import("./cook-quiz/quiz.routes").then(m => childRoutes),
   },

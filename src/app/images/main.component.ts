@@ -20,7 +20,6 @@ import { TuiDataListModule } from "@taiga-ui/core";
 import { TuiHostedDropdownModule } from "@taiga-ui/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { delay, debounceTime } from "rxjs";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "app-main",
@@ -81,7 +80,6 @@ export class MainComponent {
   constructor(
     private readonly service: BackendService,
     private readonly cdr: ChangeDetectorRef,
-    private readonly router: Router
   ) {
     this.getItems();
     this.searchInput.valueChanges
@@ -125,7 +123,8 @@ export class MainComponent {
       per_page: 8,
     };
     this.service
-      .getAllDataImages$(params)
+    .images
+    .getImages$(params)
       .pipe(takeUntilDestroyed(this.destroy), delay(100))
       .subscribe(data => {
         this.loadingStatus = false;

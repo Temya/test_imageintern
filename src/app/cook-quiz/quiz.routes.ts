@@ -1,43 +1,37 @@
 import { Routes } from "@angular/router";
-import { AuthorizationComponent } from "./major/authorization/authorization.component";
-import { RegistrationComponent } from "./major/registration/registration.component";
 import { authorizationGuard } from "../core/auth/authorization.guard";
-import { MainMenuComponent } from "./major/main-menu/main-menu.component";
-import { NewGameComponent } from "./major/main-menu/new-game/new-game.component";
-import { AchievementsComponent } from "./major/main-menu/achievements/achievements.component";
-import { SettingsComponent } from "./major/main-menu/settings/settings.component";
 
 export const childRoutes: Routes = [
   {
     path: "",
-    component: AuthorizationComponent,
+    loadComponent: () => import("./major/authorization/authorization.component").then((i) => i.AuthorizationComponent),
     canActivate: [authorizationGuard],
     data: { redirectIfAuth: true },
   },
   {
     path: "register",
-    component: RegistrationComponent,
+    loadComponent: () => import("./major/registration/registration.component").then((i) => i.RegistrationComponent),
     canActivate: [authorizationGuard],
     data: { redirectIfAuth: true },
   },
   {
     path: "menu",
-    component: MainMenuComponent,
+    loadComponent: () => import("./major/main-menu/main-menu.component").then((i) => i.MainMenuComponent),
     canActivate: [authorizationGuard],
   },
   {
     path: "game",
-    component: NewGameComponent,
+    loadComponent: () => import("./major/new-game/new-game.component").then((i) => i.NewGameComponent),
     canActivate: [authorizationGuard],
   },
   {
     path: "achivements",
-    component: AchievementsComponent,
+    loadComponent: () => import("./major/achievements/achievements.component").then((i) => i.AchievementsComponent),
     canActivate: [authorizationGuard],
   },
   {
     path: "settings",
-    component: SettingsComponent,
+    loadComponent: () => import("./major/settings/settings.component").then((i) => i.SettingsComponent),
     canActivate: [authorizationGuard],
   },
 ];

@@ -6,21 +6,21 @@
       <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
-      *ngIf="form.get('login')?.touched && form.get('login')?.dirty"
+      *ngIf="form.get('login')?.touched && form.get('login')?.invalid"
       [error]="loginError"></tui-error>
     <tui-input-password formControlName="password">
       Type a password
       <input placeholder="Make it secure!" tuiTextfield />
     </tui-input-password>
     <tui-error
-      *ngIf="form.get('password')?.touched && form.get('password')?.dirty"
+      *ngIf="form.get('password')?.touched && form.get('password')?.invalid"
       [error]="passwordError"></tui-error>
     <tui-input-password formControlName="confirmPassword">
       Confirm password
       <input placeholder="Make it secure!" tuiTextfield />
     </tui-input-password>
     <tui-error
-      *ngIf="form.touched && form.dirty"
+      *ngIf="form.touched && form.invalid"
       [error]="passwordConfirmError"></tui-error>
     <tui-input formControlName="email">
       Type an email

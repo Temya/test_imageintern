@@ -19,7 +19,7 @@ import { RegNewUser } from "../../../interfaces/reg-new-user";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { customValidator } from "../../../core/validators/custom.validator";
 import { TuiValidationError } from "@taiga-ui/cdk";
-import { outPutErrors } from "./error-output";
+import { outPutErrors } from "../../shared/utils/error-output";
 import { ObjectErrorsValidator } from "../../../interfaces/object-errors-validator";
 
 @Component({
@@ -59,7 +59,7 @@ export class RegistrationComponent {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(64),
-          Validators.pattern("(?=.*?[a-z])(?=.*?[0-9]).*"),
+          Validators.pattern(String.raw`(?=\w*?[a-z])(?=\w*?[0-9])\w*`),
         ]),
         confirmPassword: this.fb.control("", [
           Validators.required,
@@ -74,50 +74,37 @@ export class RegistrationComponent {
 
   public regNewUser(): void {
     if (this.form?.valid) {
-      if (
-        this.form.get("password")?.value ==
-        this.form.get("confirmPassword")?.value
-      ) {
-        const body = {
+        const body: RegNewUser = {
           username: this.form.get("login")?.value,
           password: this.form.get("password")?.value,
           email: this.form.get("email")?.value,
         };
         this.service
-          .regNewUser$(body as RegNewUser)
+          .auth
+          .regNewUser$(body)
           .pipe(takeUntilDestroyed(this.destroy))
           .subscribe();
         this.router.navigateByUrl("/major");
-      } else {
-        console.log("confirmPassword");
-      }
     } else {
       this.form?.markAllAsTouched();
     }
   }
 
   public get passwordConfirmError(): TuiValidationError | null {
-    return this.form?.errors
-      ? new TuiValidationError(outPutErrors(this.form))
-      : null;
+    return outPutErrors(this.form)
   }
 
   public get passwordError(): TuiValidationError | null {
-    return this.form?.controls["password"].errors
-      ? new TuiValidationError(outPutErrors(this.form?.controls["password"]))
-      : null;
+    return outPutErrors(this.form?.controls["password"])
   }
 
   public get loginError(): TuiValidationError | null {
-    return this.form?.controls["login"].errors
-      ? new TuiValidationError(outPutErrors(this.form?.controls["login"]))
-      : null;
+    return outPutErrors(this.form?.controls["login"])
+
   }
 
   public get emailError(): TuiValidationError | null {
-    return this.form?.controls["email"].errors
-      ? new TuiValidationError(outPutErrors(this.form?.controls["email"]))
-      : null;
+    return outPutErrors(this.form?.controls["email"])
   }
 
   public goToLogin(): void {
