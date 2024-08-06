@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Router, RouterOutlet } from "@angular/router";
 import { TuiButtonModule } from "@taiga-ui/core";
 import { CommonModule } from "@angular/common";
-import { AuthService } from "../../shared/utils/auth.service";
+import { BackendService } from "../../../shared/backend.service";
 
 @Component({
   selector: "app-main-menu",
@@ -15,7 +15,7 @@ export class MainMenuComponent {
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService
+    private readonly authService: BackendService
   ) {}
 
   public goToNewGame(): void {
@@ -31,6 +31,6 @@ export class MainMenuComponent {
   }
 
   public exit(): void {
-    this.authService.handleLogoutWithRedirect();
+    this.authService.auth.handleLogoutWithRedirect();
   }
 }

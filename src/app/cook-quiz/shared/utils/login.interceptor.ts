@@ -1,10 +1,10 @@
 import { HttpInterceptorFn } from "@angular/common/http";
 import { inject } from "@angular/core";
-import { AuthService } from "./auth.service";
+import { BackendService } from "../../../shared/backend.service";
 
 export const loginInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
-  if (req.withCredentials && authService.getToken()) {
+  const authService = inject(BackendService);
+  if (req.withCredentials && authService.auth.getToken()) {
     const reqWithToken = req.clone({
       headers: req.headers.set(
         "Autorization",

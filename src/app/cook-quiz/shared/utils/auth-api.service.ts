@@ -8,9 +8,10 @@ import { UserParams } from "../interfaces/userparams";
 import { RegNewUser } from "../interfaces/reg-new-user";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root'
 })
-export class AuthService {
+export class AuthApiService {
+
   public readonly token$: Observable<string | undefined>;
   public readonly token$$: BehaviorSubject<string | undefined>;
 

@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
-import { AuthService } from "../cook-quiz/shared/utils/auth.service";
 import { ImagesService } from "../images/shared/utils/images.service";
+import { AuthApiService } from "../cook-quiz/shared/utils/auth-api.service";
 
 
 
@@ -11,6 +11,6 @@ import { ImagesService } from "../images/shared/utils/images.service";
 export class BackendService {
 
   public readonly images = inject(ImagesService);
-  public readonly auth = inject(AuthService);
+  public readonly auth = inject(AuthApiService);
 
 }
