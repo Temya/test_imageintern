@@ -14,10 +14,7 @@ import {
 } from "@angular/forms";
 import { TuiButtonModule, TuiErrorModule } from "@taiga-ui/core";
 import { TuiInputModule, TuiInputPasswordModule } from "@taiga-ui/kit";
-import { BackendService } from "../../../services/backend.service";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { Router } from "@angular/router";
-import { TOKEN_KEY } from "../../../core/auth/constants";
 import { AuthService } from "../../../core/auth/auth.service";
 import { finalize } from "rxjs";
 import { TuiValidationError } from "@taiga-ui/cdk";
@@ -45,7 +42,6 @@ export class AuthorizationComponent {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly service: BackendService,
     private readonly authService: AuthService,
     private readonly router: Router,
     private readonly cdr: ChangeDetectorRef

@@ -1,1 +1,38 @@
-<p>settings works!</p>
+<div class="form" *ngIf="form" [formGroup]="form">
+  <h1>Настройки</h1>
+  <h3>Выбор сложности</h3>
+  <div class="difficultyMenu">
+    <tui-radio-block
+            contentAlign="right"
+            formControlName="complexity"
+            item="easy"
+            size="l"
+        >
+        Легко
+        </tui-radio-block>
+        <tui-radio-block
+            contentAlign="right"
+            formControlName="complexity"
+            item="medium"
+            size="l"
+        >
+        Нормально
+        </tui-radio-block>
+        <tui-radio-block
+            contentAlign="right"
+            formControlName="complexity"
+            item="hard"
+            size="l"
+        >
+        Сложно
+        </tui-radio-block>
+  </div>
+  <h3>Звук</h3>
+  <div class="sounds">
+    <button appearance="secondary-destructive" tuiButton>Музыка</button>
+    <button appearance="secondary-destructive" tuiButton>Звуки</button>
+  </div>
+  <div class="endMenu">
+    <button appearance="secondary-destructive" tuiButton>Сохранить</button>
+  </div>
+</div>
