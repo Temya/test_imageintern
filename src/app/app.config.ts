@@ -12,7 +12,7 @@ import {
   withInterceptors,
 } from "@angular/common/http";
 import { routes } from "./app.routes";
-import { loginInterceptor } from "./core/auth/login.interceptor";
+import { loginInterceptor } from "./cook-quiz/shared/utils/login.interceptor";
 
 export const appConfig: ApplicationConfig = {
   providers: [

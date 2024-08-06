@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { SearchInterface } from "../../interfaces/search-interface";
 import { Observable } from "rxjs";
-import { ImagesData } from "../../interfaces/images-data";
 import { HttpClient } from "@angular/common/http";
+import { ImagesData } from "../interfaces/images-data";
+import { SearchInterface } from "../interfaces/search-interface";
 
 @Injectable({
   providedIn: "root",

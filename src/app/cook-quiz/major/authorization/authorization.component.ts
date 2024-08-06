@@ -15,10 +15,10 @@ import {
 import { TuiButtonModule, TuiErrorModule } from "@taiga-ui/core";
 import { TuiInputModule, TuiInputPasswordModule } from "@taiga-ui/kit";
 import { Router } from "@angular/router";
-import { AuthService } from "../../../core/auth/auth.service";
 import { finalize } from "rxjs";
 import { TuiValidationError } from "@taiga-ui/cdk";
 import { outPutErrors } from "../../shared/utils/error-output";
+import { BackendService } from "../../../shared/backend.service";
 
 @Component({
   selector: "app-authorization",
@@ -42,7 +42,7 @@ export class AuthorizationComponent {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly authService: AuthService,
+    private readonly service: BackendService,
     private readonly router: Router,
     private readonly cdr: ChangeDetectorRef
   ) {
@@ -54,17 +54,18 @@ export class AuthorizationComponent {
 
   public auth(): void {
     if (this.form?.valid) {
-      this.authService
-        .login$(
-          this.form?.get("login")?.value as string,
-          this.form?.get("password")?.value as string
-        )
-        .pipe(finalize(() => this.cdr.detectChanges()))
-        .subscribe({
-          next: () => {
-            this.router.navigateByUrl("/major/menu");
-          },
-        });
+      this.service
+      .auth
+      .login$(
+        this.form?.get("login")?.value as string,
+        this.form?.get("password")?.value as string
+      )
+      .pipe(finalize(() => this.cdr.detectChanges()))
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl("/major/menu");
+        },
+      });
     }
     else {
       this.form?.markAllAsTouched();

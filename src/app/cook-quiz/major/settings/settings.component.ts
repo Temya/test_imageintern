@@ -3,7 +3,7 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { TuiButtonModule } from "@taiga-ui/core";
 import { TuiRadioBlockModule } from "@taiga-ui/kit";
-import { GameSettings } from "../../../interfaces/game-settings";
+import { GameSettings } from "../../shared/interfaces/game-settings";
 
 @Component({
   selector: "app-settings",

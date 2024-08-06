@@ -12,14 +12,16 @@ import {
   TuiLoaderModule,
   TuiSvgModule,
 } from "@taiga-ui/core";
-import { BackendService } from "../services/backend.service";
+
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { Images } from "../interfaces/images";
+
 import { CommonModule } from "@angular/common";
 import { TuiDataListModule } from "@taiga-ui/core";
 import { TuiHostedDropdownModule } from "@taiga-ui/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { delay, debounceTime } from "rxjs";
+import { Images } from "./shared/interfaces/images";
+import { BackendService } from "../shared/backend.service";
 
 @Component({
   selector: "app-main",

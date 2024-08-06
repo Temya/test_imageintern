@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { authorizationGuard } from "../core/auth/authorization.guard";
+import { authorizationGuard } from "./shared/utils/authorization.guard";
 
 export const childRoutes: Routes = [
   {

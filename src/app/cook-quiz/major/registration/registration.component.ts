@@ -13,14 +13,13 @@ import {
 } from "@angular/forms";
 import { TuiButtonModule, TuiErrorModule } from "@taiga-ui/core";
 import { TuiInputModule, TuiInputPasswordModule } from "@taiga-ui/kit";
-import { BackendService } from "../../../services/backend.service";
 import { Router } from "@angular/router";
-import { RegNewUser } from "../../../interfaces/reg-new-user";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { customValidator } from "../../../core/validators/custom.validator";
 import { TuiValidationError } from "@taiga-ui/cdk";
 import { outPutErrors } from "../../shared/utils/error-output";
-import { ObjectErrorsValidator } from "../../../interfaces/object-errors-validator";
+import { BackendService } from "../../../shared/backend.service";
+import { customValidator } from "../../../shared/custom.validator";
+import { RegNewUser } from "../../shared/interfaces/reg-new-user";
 
 @Component({
   selector: "app-registration",

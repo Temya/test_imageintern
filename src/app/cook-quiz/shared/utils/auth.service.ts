@@ -2,10 +2,10 @@ import { Injectable } from "@angular/core";
 import { LOGIN_URL, TOKEN_KEY } from "./constants";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { Router } from "@angular/router";
-import { UserData } from "../../interfaces/userdata";
 import { HttpClient } from "@angular/common/http";
-import { UserParams } from "../../interfaces/userparams";
-import { RegNewUser } from "../../interfaces/reg-new-user";
+import { UserData } from "../interfaces/userdata";
+import { UserParams } from "../interfaces/userparams";
+import { RegNewUser } from "../interfaces/reg-new-user";
 
 @Injectable({
   providedIn: "root",

@@ -1,7 +1,7 @@
 import { TuiDialogModule, TuiRootModule } from "@taiga-ui/core";
 import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
-import { NavigateComponent } from "./navigate/navigate.component";
+import { NavigateComponent } from "./shared/navigate/navigate.component";
 
 @Component({
   selector: "app-root",

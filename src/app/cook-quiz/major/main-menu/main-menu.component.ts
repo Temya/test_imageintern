@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { Router, RouterOutlet } from "@angular/router";
 import { TuiButtonModule } from "@taiga-ui/core";
-import { AuthService } from "../../../core/auth/auth.service";
 import { CommonModule } from "@angular/common";
+import { AuthService } from "../../shared/utils/auth.service";
 
 @Component({
   selector: "app-main-menu",
