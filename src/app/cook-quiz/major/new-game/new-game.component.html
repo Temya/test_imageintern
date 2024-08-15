@@ -16,7 +16,23 @@
           <input type="text" />
         }
         @if (question.type === "drag") {
-          <input type="text" />
+            <tui-tiles
+            class="tiles"
+            [debounce]="0"
+            [(order)]="order"
+        >
+            <tui-tile
+                *ngFor="let item of question.answers; let index = index"
+                class="tile"
+                [style.order]="order.get(index)"
+                tuiTileHandle
+            >
+                <div class="content"
+                >
+                    {{ item.text }}
+                </div>
+            </tui-tile>
+        </tui-tiles>
         }
         @if (question.type === "check") {
           <tui-checkbox-labeled

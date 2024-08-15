@@ -15,3 +15,35 @@ form {
   background-color: beige;
   padding: 20px;
 }
+
+.tiles {
+    gap: 1rem;
+    display: flex;
+    
+    .tile {
+        flex: 1;
+        display: flex;
+        text-align: center;
+
+        .content {
+            background-color: beige;
+            border-radius: 12px;
+            height: 100%;
+            border: 1.5px solid black;
+        }
+    }
+}
+
+.tile:before {
+    content: 'Drop here';
+    display: flex;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    color: var(--tui-base-04);
+    border-radius: var(--tui-radius-l);
+    border: 2px dashed var(--tui-base-03);
+}
+

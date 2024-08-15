@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { TuiCheckboxLabeledModule, TuiRadioLabeledModule } from "@taiga-ui/kit";
+import { TuiCheckboxLabeledModule, TuiRadioLabeledModule, TuiTilesModule } from "@taiga-ui/kit";
 import { QuestionsLite } from "../../../core/questions/questions.data";
 import { Questions } from "../../../interfaces/questions";
 
@@ -20,12 +20,14 @@ import { Questions } from "../../../interfaces/questions";
     CommonModule,
     TuiRadioLabeledModule,
     TuiCheckboxLabeledModule,
+    TuiTilesModule
   ],
   templateUrl: "./new-game.component.html",
   styleUrl: "./new-game.component.scss",
 })
 export class NewGameComponent {
   public form: FormGroup = new FormGroup({});
+  public order = new Map();
 
   constructor(private readonly fb: FormBuilder) {
     this.generateForm();
