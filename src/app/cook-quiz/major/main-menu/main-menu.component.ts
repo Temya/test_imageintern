@@ -13,7 +13,6 @@ import { GameSettings } from "../../shared/interfaces/game-settings";
   styleUrl: "./main-menu.component.scss",
 })
 export class MainMenuComponent {
-
   private readonly setting?: GameSettings;
 
   constructor(
@@ -21,9 +20,9 @@ export class MainMenuComponent {
     private readonly service: BackendService
   ) {
     this.setting = service.quiz.getSettings();
-    let audio = new Audio("src/assets/files/game.mp3");
-    audio.load();
-    audio.play();
+    // let audio = new Audio("src/assets/files/game.mp3");
+    // audio.load();
+    // audio.play();
   }
 
   public goToNewGame(): void {

@@ -1,1 +1,31 @@
-<p>new-game works!</p>
+<form *ngIf="form" [formGroup]="form">
+  <h1>Раунд 1</h1>
+  <ul>
+    @for (question of questions; track $index) {
+      <li>
+        {{ question.question }}
+        @if (question.type === "radio") {
+          <tui-radio-labeled
+            [formControl]="getFormControl($index)"
+            *ngFor="let answer of question.answers"
+            [item]="answer"
+            >{{ answer.text }}</tui-radio-labeled
+          >
+        }
+        @if (question.type === "input") {
+          <input type="text" />
+        }
+        @if (question.type === "drag") {
+          <input type="text" />
+        }
+        @if (question.type === "check") {
+          <tui-checkbox-labeled
+            *ngFor="let answer of question.answers; let i = index"
+            [formControl]="getFormArray($index, i)">
+            {{ answer.text }}
+          </tui-checkbox-labeled>
+        }
+      </li>
+    }
+  </ul>
+</form>
