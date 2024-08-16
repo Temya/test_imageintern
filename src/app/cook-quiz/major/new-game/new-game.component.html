@@ -1,47 +1,42 @@
 <form *ngIf="form" [formGroup]="form">
-  <h1>Раунд 1</h1>
+  <h1>Раунд {{round}}</h1>
   <ul>
     @for (question of questions; track $index) {
-      <li>
-        {{ question.question }}
-        @if (question.type === "radio") {
-          <tui-radio-labeled
-            [formControl]="getFormControl($index)"
-            *ngFor="let answer of question.answers"
-            [item]="answer"
-            >{{ answer.text }}</tui-radio-labeled
-          >
-        }
-        @if (question.type === "input") {
-          <input type="text" />
-        }
-        @if (question.type === "drag") {
-            <tui-tiles
-            class="tiles"
-            [debounce]="0"
-            [(order)]="order"
-        >
-            <tui-tile
-                *ngFor="let item of question.answers; let index = index"
-                class="tile"
-                [style.order]="order.get(index)"
-                tuiTileHandle
-            >
-                <div class="content"
-                >
-                    {{ item.text }}
-                </div>
-            </tui-tile>
-        </tui-tiles>
-        }
-        @if (question.type === "check") {
-          <tui-checkbox-labeled
-            *ngFor="let answer of question.answers; let i = index"
-            [formControl]="getFormArray($index, i)">
-            {{ answer.text }}
-          </tui-checkbox-labeled>
-        }
-      </li>
+    <li>
+      {{ question.question }}
+      @if (question.type === "radio") {
+      <tui-radio-labeled [formControl]="getFormControl($index)" *ngFor="let answer of question.answers"
+        [item]="answer">{{ answer.text }}</tui-radio-labeled>
+      }
+      @else if (question.type === "input") {
+      <tui-input [formControl]="getFormControl($index)">
+        Type an answer
+      </tui-input>
+      }
+      @else if (question.type === "drag") {
+        <div class="images">
+          <img *ngFor="let image of question.images" [src]="image.url" alt="">
+        </div>
+      <tui-tiles class="tiles" [debounce]="0" [(order)]="order">
+        <tui-tile *ngFor="let item of question.answers; let index = index" class="tile" [style.order]="order.get(index)"
+          tuiTileHandle>
+          <div class="content">
+            {{ item.text }}
+          </div>
+        </tui-tile>
+      </tui-tiles>
+      }
+      @else if (question.type === "check") {
+      <tui-checkbox-labeled *ngFor="let answer of question.answers; let i = index"
+        [formControl]="getFormArray($index, i)">
+        {{ answer.text }}
+      </tui-checkbox-labeled>
+      }
+    </li>
     }
   </ul>
+  <div class="buttons">
+    <button appearance="flat" tuiButton type="button">Menu</button>
+    <button appearance="flat" tuiButton type="button" (click)="checkAnswers()">Check</button>
+  </div>
 </form>

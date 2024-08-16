@@ -1,11 +1,21 @@
 export interface Questions {
   question: string;
   answers: Answer[];
-  round: number;
   type: string;
+  images?: imageData[]
 }
 
 export interface Answer {
   text: string;
   right: boolean;
+}
+
+export interface Round {
+  round: number,
+  questions: Questions[];
+}
+
+export interface imageData {
+  url: string,
+  text: string,
 }
