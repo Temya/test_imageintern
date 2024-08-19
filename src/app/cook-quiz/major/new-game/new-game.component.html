@@ -18,7 +18,7 @@
           <img *ngFor="let image of question.images" [src]="image.url" alt="">
         </div>
       <tui-tiles class="tiles" [debounce]="0" [(order)]="order">
-        <tui-tile *ngFor="let item of question.answers; let index = index" class="tile" [style.order]="order.get(index)"
+        <tui-tile *ngFor="let item of answers; let index = index" class="tile" [style.order]="order.get(index)"
           tuiTileHandle>
           <div class="content">
             {{ item.text }}
@@ -36,7 +36,7 @@
     }
   </ul>
   <div class="buttons">
-    <button appearance="flat" tuiButton type="button">Menu</button>
+    <button appearance="flat" tuiButton type="button" routerLink="/major/menu">Menu</button>
     <button appearance="flat" tuiButton type="button" (click)="checkAnswers()">Check</button>
   </div>
 </form>

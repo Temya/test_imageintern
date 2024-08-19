@@ -4,6 +4,7 @@ import { TuiButtonModule } from "@taiga-ui/core";
 import { CommonModule } from "@angular/common";
 import { BackendService } from "../../../shared/backend.service";
 import { GameSettings } from "../../shared/interfaces/game-settings";
+import { QuizSettingsService } from "../../shared/utils/quiz-settings.service";
 
 @Component({
   selector: "app-main-menu",
@@ -17,12 +18,11 @@ export class MainMenuComponent {
 
   constructor(
     private readonly router: Router,
-    private readonly service: BackendService
+    private readonly service: BackendService,
+    private readonly quizService: QuizSettingsService
   ) {
     this.setting = service.quiz.getSettings();
-    let audio = new Audio("/files/menu.mp3");    
-    audio.load();
-    audio.play();
+    this.quizService.getMenuMusic();
   }
 
   public goToNewGame(): void {
