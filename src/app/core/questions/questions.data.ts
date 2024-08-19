@@ -1,4 +1,4 @@
-import { Round } from "../../interfaces/questions";
+import { Achievements, Round } from "../../interfaces/questions";
 
 export const QuestionsLite: Round[] = [
   {questions: [
@@ -179,3 +179,26 @@ export const QuestionsHard: Round[] = [
     round: 2
   }
 ];
+
+export const AchievementsData: Achievements[] = [
+  {
+    achievement: "Первый Шаг к Мастеру - Завершите свой первый квиз.",
+    availability: false
+  },
+  {
+    achievement: "Гурман Эксперт - Завершите квиз с максимальным результатом.",
+    availability: false
+  },
+  {
+    achievement: "Дегустатор со Стажем - Ответьте правильно на 50 вопросов в общей сложности.",
+    availability: false
+  },
+  {
+    achievement: "Школьник-Кулинар - Ответьте правильно на все вопросы в квизе для начинающих.",
+    availability: false
+  },
+  {
+    achievement: "Экспресс-Шеф - Завершите квиз менее чем за 5 минут.",
+    availability: false
+  }
+]

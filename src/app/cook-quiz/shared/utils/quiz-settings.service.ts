@@ -1,11 +1,14 @@
 import { Injectable } from "@angular/core";
 import { GameSettings } from "../interfaces/game-settings";
+import { Achievements } from "../../../interfaces/questions";
+import { AchievementsData } from "../../../core/questions/questions.data";
 
 @Injectable({
   providedIn: "root",
 })
 export class QuizSettingsService {
   public settings: GameSettings;
+  public achives: Achievements[];
 
   constructor() {
     this.settings = {
@@ -14,6 +17,8 @@ export class QuizSettingsService {
       sound: "on",
       volume: 0.5,
     };
+
+    this.achives = AchievementsData;
   }
 
   public setSettings(body: GameSettings): void {

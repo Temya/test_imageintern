@@ -2,7 +2,7 @@ export interface Questions {
   question: string;
   answers: Answer[];
   type: string;
-  images?: imageData[]
+  images?: ImageData[]
 }
 
 export interface Answer {
@@ -15,7 +15,12 @@ export interface Round {
   questions: Questions[];
 }
 
-export interface imageData {
+export interface ImageData {
   url: string,
   text: string,
+}
+
+export interface Achievements {
+  achievement: string,
+  availability: boolean
 }

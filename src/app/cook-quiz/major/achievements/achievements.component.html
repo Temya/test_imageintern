@@ -3,11 +3,18 @@
 </header>
 
 <main>
-
+    <div class="string" *ngFor="let item of achievements">
+        <span>{{item.achievement}}</span>
+        <tui-svg *ngIf="item.availability" src="tuiIconCheckLarge"></tui-svg>
+        <tui-svg *ngIf="!item.availability" src="tuiIconXLarge"></tui-svg>
+    </div>
 </main>
 
 <footer>
     <div class="buttons">
-        <button appearance="flat" tuiButton type="button" >Menu</button>
+        <button appearance="flat" tuiButton type="button" routerLink="/major/menu">Menu</button>
     </div>
 </footer>
+
+
+
