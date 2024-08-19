@@ -5,7 +5,7 @@
     <li>
       {{ question.question }}
       @if (question.type === "radio") {
-      <tui-radio-labeled [formControl]="getFormControl($index)" *ngFor="let answer of question.answers"
+      <tui-radio-labeled [ngClass]="" [formControl]="getFormControl($index)" *ngFor="let answer of question.answers"
         [item]="answer">{{ answer.text }}</tui-radio-labeled>
       }
       @else if (question.type === "input") {
@@ -37,6 +37,41 @@
   </ul>
   <div class="buttons">
     <button appearance="flat" tuiButton type="button" routerLink="/major/menu">Menu</button>
-    <button appearance="flat" tuiButton type="button" (click)="checkAnswers()">Check</button>
+    <button *ngIf="round === 1" appearance="flat" tuiButton type="button" (click)="comparisonOfResults()">Check</button>
+    <button *ngIf="round === 2" appearance="flat" tuiButton type="button" (click)="onClick(content, header, 'm')">Finish</button>
   </div>
 </form>
+
+
+<ng-template
+#content
+let-observer
+>
+<div class="buttonsDialog">
+    <button
+        size="m"
+        tuiButton
+        type="button"
+        routerLink="/major/menu"
+    >
+        Главное меню
+    </button>
+    <button
+        size="m"
+        tuiButton
+        type="button"
+        (click)="observer.complete(); restartGame()"
+    >
+        Заново
+    </button>
+</div>
+</ng-template>
+
+<ng-template #header>
+<div class="header">
+    <img
+        alt="Cool"
+        src="https://ng-web-apis.github.io/dist/assets/images/web-api.svg"
+    />
+</div>
+</ng-template>
