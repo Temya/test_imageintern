@@ -22,5 +22,6 @@ export interface ImageData {
 
 export interface Achievements {
   achievement: string,
-  availability: boolean
+  availability: boolean,
+  
 }

@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { TuiButtonModule, TuiSvgModule } from "@taiga-ui/core";
 import { Achievements } from "../../../interfaces/questions";
-import { AchievementsData } from "../../../core/questions/questions.data";
 import { CommonModule } from "@angular/common";
 import { QuizSettingsService } from "../../shared/utils/quiz-settings.service";
 import { RouterLink } from "@angular/router";

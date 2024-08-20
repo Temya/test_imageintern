@@ -47,6 +47,7 @@ export class NewGameComponent {
   public answers: Answer[] = [];
   public complexity: Round[] = [];
   public result = 0;
+  public startTime?: Date;
 
   private readonly destroy = inject(DestroyRef);
 
@@ -62,6 +63,7 @@ export class NewGameComponent {
     if(this.quizService.getSettings().complexity === "hard") {this.complexity = QuestionsHard}
 
     this.generateForm();
+    this.startTime = new Date();
   }
 
   public generateForm(): void {
@@ -106,17 +108,19 @@ export class NewGameComponent {
       this.complexity[this.round - 1].questions.forEach((question, index) => {
         if (question.type === "radio") {
           if((this.getFormControl(index).value as Answer).right) {
-            this.result = this.result + 10
+            this.result = this.result + 10;
+            this.quizService.questions++;
           }
         }
         if (question.type === "input") {
           if(this.getFormControl(index).value?.toLowerCase() === question.answers[0].text?.toLowerCase()) {
-            this.result = this.result + 20
+            this.result = this.result + 20;
+            this.quizService.questions++;
           }
         }
         if (question.type === "drag") {
           this.checkDragAndDrop(this.answers).forEach((data) => {
-            data === "good" ? this.result = this.result + 10 : null;
+            data === "good" ? this.result = this.result + 10 && this.quizService.questions++ : null;
           });
         }
         if (question.type === "check") {
@@ -157,6 +161,11 @@ export class NewGameComponent {
     header: PolymorpheusContent,
     size: TuiDialogSize,
   ): void {
+    this.quizService.setFirstStep();
+    this.quizService.setGourmetExpert(this.result);
+    this.quizService.setTasterWithExperience();
+    this.quizService.setSchoolboyCulinary(this.result);
+    this.quizService.setExpressChef((new Date()).getTime() - (this.startTime as Date).getTime());
     this.comparisonOfResults();
     this.dialogs
     .open(content, {
@@ -173,5 +182,25 @@ export class NewGameComponent {
   public restartGame(): void {
     this.round = 1;
     this.generateForm();
+  }
+
+  public firstStep(): void {
+
+  }
+
+  public gourmetExpert(): void {
+    
+  }
+
+  public tasterWithExperience(): void {
+    
+  }
+
+  public schoolboyCulinary(): void {
+    
+  }
+
+  public expressChef(): void {
+    
   }
 }
