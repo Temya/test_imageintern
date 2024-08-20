@@ -183,24 +183,4 @@ export class NewGameComponent {
     this.round = 1;
     this.generateForm();
   }
-
-  public firstStep(): void {
-
-  }
-
-  public gourmetExpert(): void {
-    
-  }
-
-  public tasterWithExperience(): void {
-    
-  }
-
-  public schoolboyCulinary(): void {
-    
-  }
-
-  public expressChef(): void {
-    
-  }
 }
