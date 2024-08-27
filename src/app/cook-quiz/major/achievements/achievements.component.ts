@@ -15,7 +15,7 @@ import { RouterLink } from "@angular/router";
 export class AchievementsComponent {
   public achievements: Achievements[] = [];
 
-  constructor(private readonly settingsService: QuizSettingsService){
+  constructor(private readonly settingsService: QuizSettingsService) {
     this.achievements = this.settingsService.achives;
   }
 }

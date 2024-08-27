@@ -7,7 +7,13 @@ import { TuiPushModule } from "@taiga-ui/kit";
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [RouterOutlet, TuiRootModule, TuiDialogModule, NavigateComponent, TuiPushModule],
+  imports: [
+    RouterOutlet,
+    TuiRootModule,
+    TuiDialogModule,
+    NavigateComponent,
+    TuiPushModule,
+  ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.scss",
   providers: [],

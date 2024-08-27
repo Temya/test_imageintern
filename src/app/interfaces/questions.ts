@@ -2,7 +2,7 @@ export interface Questions {
   question: string;
   answers: Answer[];
   type: string;
-  images?: ImageData[]
+  images?: ImageData[];
 }
 
 export interface Answer {
@@ -11,17 +11,16 @@ export interface Answer {
 }
 
 export interface Round {
-  round: number,
+  round: number;
   questions: Questions[];
 }
 
 export interface ImageData {
-  url: string,
-  text: string,
+  url: string;
+  text: string;
 }
 
 export interface Achievements {
-  achievement: string,
-  availability: boolean,
-  
+  achievement: string;
+  availability: boolean;
 }

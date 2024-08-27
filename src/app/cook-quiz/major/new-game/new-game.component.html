@@ -1,77 +1,99 @@
-<form *ngIf="form" [formGroup]="form">
-  <h1>Раунд {{round}}</h1>
-  <ul>
-    @for (question of questions; track $index) {
-    <li>
-      {{ question.question }}
-      @if (question.type === "radio") {
-      <tui-radio-labeled [ngClass]="" [formControl]="getFormControl($index)" *ngFor="let answer of question.answers"
-        [item]="answer">{{ answer.text }}</tui-radio-labeled>
+@if (form) {
+  <form [formGroup]="form">
+    <h1>Раунд {{ round }}</h1>
+    <ul>
+      @for (question of questions; track $index) {
+        <li>
+          {{ question.question }}
+          @if (question.type === "radio") {
+            <tui-radio-labeled
+              [ngClass]=""
+              [formControl]="getFormControl($index)"
+              *ngFor="let answer of question.answers"
+              [item]="answer"
+              >{{ answer.text }}</tui-radio-labeled
+            >
+          } @else if (question.type === "input") {
+            <tui-input [formControl]="getFormControl($index)">
+              Type an answer
+            </tui-input>
+          } @else if (question.type === "drag") {
+            @for (image of question.images; track $index) {
+              <div class="images">
+                <img [src]="image.url" alt="" />
+              </div>
+            }
+            <tui-tiles class="tiles" [debounce]="0" [(order)]="order">
+              @for (item of answers; track $index) {
+                <tui-tile
+                  class="tile"
+                  [style.order]="order.get($index)"
+                  tuiTileHandle>
+                  <div class="content">
+                    {{ item.text }}
+                  </div>
+                </tui-tile>
+              }
+            </tui-tiles>
+          } @else if (question.type === "check") {
+            @for (answer of question.answers; track $index; let i = $index) {
+              <tui-checkbox-labeled [formControl]="getFormArray($index, i)">
+                {{ answer.text }}
+              </tui-checkbox-labeled>
+            }
+          }
+        </li>
       }
-      @else if (question.type === "input") {
-      <tui-input [formControl]="getFormControl($index)">
-        Type an answer
-      </tui-input>
+    </ul>
+    <div class="buttons">
+      <button
+        appearance="flat"
+        tuiButton
+        type="button"
+        routerLink="/major/menu">
+        Menu
+      </button>
+      @if (round === 1) {
+        <button
+          appearance="flat"
+          tuiButton
+          type="button"
+          (click)="comparisonOfResults()">
+          Check
+        </button>
       }
-      @else if (question.type === "drag") {
-        <div class="images">
-          <img *ngFor="let image of question.images" [src]="image.url" alt="">
-        </div>
-      <tui-tiles class="tiles" [debounce]="0" [(order)]="order">
-        <tui-tile *ngFor="let item of answers; let index = index" class="tile" [style.order]="order.get(index)"
-          tuiTileHandle>
-          <div class="content">
-            {{ item.text }}
-          </div>
-        </tui-tile>
-      </tui-tiles>
+      @if (round === 2) {
+        <button
+          appearance="flat"
+          tuiButton
+          type="button"
+          (click)="onClick(content, header, 'm')">
+          Finish
+        </button>
       }
-      @else if (question.type === "check") {
-      <tui-checkbox-labeled *ngFor="let answer of question.answers; let i = index"
-        [formControl]="getFormArray($index, i)">
-        {{ answer.text }}
-      </tui-checkbox-labeled>
-      }
-    </li>
-    }
-  </ul>
-  <div class="buttons">
-    <button appearance="flat" tuiButton type="button" routerLink="/major/menu">Menu</button>
-    <button *ngIf="round === 1" appearance="flat" tuiButton type="button" (click)="comparisonOfResults()">Check</button>
-    <button *ngIf="round === 2" appearance="flat" tuiButton type="button" (click)="onClick(content, header, 'm')">Finish</button>
+    </div>
+  </form>
+}
+
+<ng-template #content let-observer>
+  <div class="buttonsDialog">
+    <button size="m" tuiButton type="button" routerLink="/major/menu">
+      Главное меню
+    </button>
+    <button
+      size="m"
+      tuiButton
+      type="button"
+      (click)="observer.complete(); restartGame()">
+      Заново
+    </button>
   </div>
-</form>
-
-
-<ng-template
-#content
-let-observer
->
-<div class="buttonsDialog">
-    <button
-        size="m"
-        tuiButton
-        type="button"
-        routerLink="/major/menu"
-    >
-        Главное меню
-    </button>
-    <button
-        size="m"
-        tuiButton
-        type="button"
-        (click)="observer.complete(); restartGame()"
-    >
-        Заново
-    </button>
-</div>
 </ng-template>
 
 <ng-template #header>
-<div class="header">
+  <div class="header">
     <img
-        alt="Cool"
-        src="https://ng-web-apis.github.io/dist/assets/images/web-api.svg"
-    />
-</div>
+      alt="Cool"
+      src="https://ng-web-apis.github.io/dist/assets/images/web-api.svg" />
+  </div>
 </ng-template>

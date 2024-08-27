@@ -35,10 +35,22 @@ export class SettingsComponent {
     private readonly quizService: QuizSettingsService
   ) {
     this.form = this.fb.group({
-      complexity: this.fb.control(this.quizService.getSettings().complexity, Validators.required),
-      music: this.fb.control(this.quizService.getSettings().music, Validators.required),
-      sound: this.fb.control(this.quizService.getSettings().sound, Validators.required),
-      volume: this.fb.control(this.quizService.getSettings().volume * 100, Validators.required),
+      complexity: this.fb.control(
+        this.quizService.getSettings().complexity,
+        Validators.required
+      ),
+      music: this.fb.control(
+        this.quizService.getSettings().music,
+        Validators.required
+      ),
+      sound: this.fb.control(
+        this.quizService.getSettings().sound,
+        Validators.required
+      ),
+      volume: this.fb.control(
+        this.quizService.getSettings().volume * 100,
+        Validators.required
+      ),
     });
   }
 
