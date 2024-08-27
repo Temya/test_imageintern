@@ -2,27 +2,27 @@
   <form [formGroup]="form">
     <h1>Раунд {{ round }}</h1>
     <ul>
-      @for (question of questions; track $index) {
+      @for (question of questions; track $index; let id = $index) {
         <li>
           {{ question.question }}
           @if (question.type === "radio") {
-            <tui-radio-labeled
-              [ngClass]=""
+            @for (answer of question.answers; track $index) {
+              <tui-radio-labeled
               [formControl]="getFormControl($index)"
-              *ngFor="let answer of question.answers"
               [item]="answer"
               >{{ answer.text }}</tui-radio-labeled
             >
+            }
           } @else if (question.type === "input") {
             <tui-input [formControl]="getFormControl($index)">
               Type an answer
             </tui-input>
           } @else if (question.type === "drag") {
+            <div class="images">
             @for (image of question.images; track $index) {
-              <div class="images">
-                <img [src]="image.url" alt="" />
-              </div>
+              <img [src]="image.url" alt="" />
             }
+          </div>
             <tui-tiles class="tiles" [debounce]="0" [(order)]="order">
               @for (item of answers; track $index) {
                 <tui-tile
@@ -37,7 +37,7 @@
             </tui-tiles>
           } @else if (question.type === "check") {
             @for (answer of question.answers; track $index; let i = $index) {
-              <tui-checkbox-labeled [formControl]="getFormArray($index, i)">
+              <tui-checkbox-labeled [formControl]="getFormArray(id, i)">
                 {{ answer.text }}
               </tui-checkbox-labeled>
             }
